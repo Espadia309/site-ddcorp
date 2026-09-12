@@ -19,8 +19,8 @@ body {
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
     color: var(--milk-panel);
-    background: linear-gradient(160deg, var(--milk-bg) 0%, var(--milk-bg-2) 55%, var(--milk-bg) 100%);
     min-height: 100vh;
+    background: linear-gradient(160deg, #201620 0%, #33212f 55%, #201620 100%);
     letter-spacing: 0.02em;
 }
 
@@ -51,6 +51,7 @@ nav a:first-child span {
 }
 
 nav a {
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
     color: var(--milk-panel);
     text-decoration: none;
     font-size: 1.15rem;
@@ -106,7 +107,7 @@ footer {
 }
 
 a {
-  color: var(--milk-accent-2);
+    color: var(--milk-accent-2);
 }
 
 @media (max-width: 480px) {
@@ -119,4 +120,3 @@ a {
         padding: 1.25rem 1.25rem;
     }
 }
-

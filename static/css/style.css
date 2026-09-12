@@ -15,7 +15,7 @@
 body {
     font-family: "VT323", "Courier New", monospace;
     font-size: 1.25rem;
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
     color: var(--milk-panel);
@@ -46,7 +46,7 @@ nav a:first-child img {
 }
 
 nav a:first-child span {
-  font-size: 1.rem;
+  font-size: 1.15rem;
   line-height: 1;
 }
 
@@ -70,7 +70,11 @@ h1 {
     color: var(--milk-accent-2);
     font-size: 2.4rem;
     margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.35);
+}
+
+h2 {
+  color: #d77ec1;
+  font-size: 1.85rem
 }
 
 main {
@@ -78,7 +82,13 @@ main {
     border: 2px solid var(--milk-line);
     border-radius: 10px;
     padding: 1.5rem 1.75rem;
+    max-width: 900px;
+    margin: 0 auto;
     box-shadow: 4px 4px 0px rgba(58, 47, 77, 0.12);
+}
+
+main h1, main h2 {
+    text-align: center;
 }
 
 p, li {
@@ -89,8 +99,24 @@ footer {
     margin-top: 3rem;
     padding: 1rem 0;
     border-top: 2px dashed var(--milk-panel);
-    color: var(--milk-ink);
+    color: var(--milk-panel);
     opacity: 0.65;
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     text-align: center;
 }
+
+a {
+  color: var(--milk-accent-2);
+}
+
+@media (max-width: 480px) {
+    nav {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+ 
+    main {
+        padding: 1.25rem 1.25rem;
+    }
+}
+

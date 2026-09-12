@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "sub_templates/head.html" %}
+</head>
+<body>
+    {% include "sub_templates/nav.html" %}
+
+    <main>
+        <h1>{{ title }}</h1>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "sub_templates/footer.html" %}
+</body>
+</html>

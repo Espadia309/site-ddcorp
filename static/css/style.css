@@ -90,6 +90,7 @@ main {
 
 main h1, main h2 {
     text-align: center;
+    clear: both;
 }
 
 p, li {
@@ -108,6 +109,27 @@ footer {
 
 a {
     color: var(--milk-accent-2);
+}
+
+.logo {
+    width: 40%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.teamImg {
+    width: 40%;
+    height: auto;
+    flex-shrink: 0;
+    order: 2;
+}
+
+.teamBlock {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 @media (max-width: 480px) {

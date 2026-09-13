@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<img src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}" alt="Logo DD Corp" class="logo">
 <p>Bienvenue sur le site de la <strong>DD Corp</strong>, l'équipe de robotique du <strong>Lycée Gustave Eiffel</strong></p>
 <ul>
     <li>Découvrez <a href="{{ url_for('equipe') }}">qui nous sommes</a></li>

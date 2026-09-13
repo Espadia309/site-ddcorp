@@ -2,9 +2,12 @@
 
 {% block content %}
 <h2>Qui Sommes Nous ?</h2>
-<p>
-    Nous sommes la <strong>DD Corp</strong>, une équipe de robotique du <strong>lycée Gustave Eiffel D'Armentières</strong>, passionés d'innovation et de technologie. Nous sommes des participants de la <strong>FIRST LEGO LEAGUE</strong>.
-</p>
+ <div class="teamBlock">
+    <img src="{{ url_for('static', filename='images/Team.png') }}" alt="Équipe" class="teamImg">
+    <p>
+        Nous sommes la <strong>DD Corp</strong>, une équipe de robotique du <strong>lycée Gustave Eiffel D'Armentières</strong>, passionés d'innovation et de technologie. Nous sommes des participants de la <strong>FIRST LEGO LEAGUE</strong>.
+    </p>
+</div>
 <h2>Qu'est ce que la First Lego League ?</h2>
 <p>
     La <strong>First Lego League</strong> (FLL) est une compétition qui encourage les jeunes a explorer la science, la technologie, l'ingénieurie et les mathématiques à travers des défis basés :

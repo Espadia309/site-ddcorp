@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Je sais pas quoi dire mais voila bonjour a tous</p>
+<p>Bienvenue sur le site de la <strong>DD Corp</strong>, l'équipe de robotique du <strong>Lycée Gustave Eiffel</strong></p>
+<ul>
+    <li>Découvrez <a href="{{ url_for('equipe') }}">qui nous sommes</a></li>
+    <li>Aprennez en plus sur nos <a href="{{ url_for('projet') }}">projets d'innovation</a></li>
+    <li>Observez nos magnifiques perfommances en <a href="{{ url_for('robot') }}">robot game</a></li>
+</ul>
 {% endblock %}

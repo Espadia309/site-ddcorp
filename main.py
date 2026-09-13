@@ -13,11 +13,15 @@ def equipe():
 
 @app.route("/projet")
 def projet():
-    return render_template("projet.html", title="Projet")
+    return render_template("projet.html", title="Projets")
 
 @app.route("/robot")
 def robot():
     return render_template("robot.html", title="Robot Game")
+
+@app.route("/projet/vestige")
+def vestige():
+    return render_template("vestige.html", title="Vestige")
 
 if __name__ == "__main__":
     app.run()

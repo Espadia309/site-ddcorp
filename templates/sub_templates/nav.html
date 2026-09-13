@@ -1,9 +1,9 @@
 <nav>
-    <a href="{{ url_for('home') }}">
+  <a href="{{ url_for('home') }}" {% if request.path == "/" %}class="active"{% endif %}>
     <img src="{{ url_for('static',filename='images/Logo_Ddcorp_2.png') }}"  width="50" height="50" alt="Logo DDcorp"/>
     <span><em>Home</em></span>
     </a>
-    <a href="{{ url_for('equipe') }}">Équipe</a>
-    <a href="{{ url_for('projet') }}">Projets</a>
-    <a href="{{ url_for('robot') }}">Robot Game</a>
+  <a href="{{ url_for('equipe') }}" {% if request.path == url_for('equipe') %}class="active"{% endif %}>Équipe</a>
+    <a href="{{ url_for('projet') }}" {% if request.path.startswith('/projet') %}class="active"{% endif %}>Projets</a>
+    <a href="{{ url_for('robot') }}" {% if request.path == url_for('robot') %}class="active"{% endif %}>Robot Game</a>
 </nav>

@@ -23,5 +23,9 @@ def robot():
 def vestige():
     return render_template("vestige.html", title="Vestige")
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html", title="Page Introuvable"), 404
+
 if __name__ == "__main__":
     app.run()

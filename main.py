@@ -13,6 +13,10 @@ def home():
 def equipe():
     return render_template("equipe.html", title="Équipe")
 
+@app.route("/equipe/prix")
+def prix():
+    return render_template("prix.html", title="Prix")
+
 @app.route("/projet")
 def projet():
     return render_template("projet.html", title="Projets")
@@ -20,6 +24,10 @@ def projet():
 @app.route("/robot")
 def robot():
     return render_template("robot.html", title="Robot Game")
+
+@app.route("/actus")
+def actus():
+    return render_template("actus.html", title="Actualités")
 
 @app.route("/projet/vestige")
 def vestige():

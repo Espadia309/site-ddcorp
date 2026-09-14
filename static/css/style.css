@@ -136,8 +136,19 @@ a {
 }
 
 .vestigeImg {
-    width: 65%;
+    width: 45%;
     height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hydracheImg {
+    width: 35%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .contactForm {
@@ -219,5 +230,9 @@ a {
 
     .vestigeImg {
         width: 100%;
+    }
+
+    .hydracheImg {
+      width: 80%
     }
 }

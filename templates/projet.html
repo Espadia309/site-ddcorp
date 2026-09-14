@@ -3,7 +3,16 @@
 {% block content %}
 <p>Quel projet voulez-vous voir ?</p>
 <ul>
-  <li><a href="{{ url_for('vestige') }}">Vestige, projet de la FLL 2025-2026, UNEARTHED</a> <img src="{{ url_for('static',filename='images/Logo_Vestige.png') }}" alt="Logo Vestige" class="vestigeImg"></li>
     <li>....., projet de la FLL 2026-2027, BIOGLOW</li>
+
+    <li>
+        <a href="{{ url_for('vestige') }}">Vestige, projet de la FLL 2025-2026, UNEARTHED</a>
+        <img src="{{ url_for('static', filename='images/Logo_Vestige.png') }}" alt="Logo Vestige" class="vestigeImg">
+    </li>
+
+    <li>
+        <a href="{{ url_for('hydrache') }}">Hydra'che, projet de la FLL 2024-2025, SUBMERGED</a>
+        <img src="{{ url_for('static', filename='images/Logo_Hydrache.png') }}" alt="Logo Hydrache" class="hydracheImg">
+    </li>
 </ul>
 {% endblock %}

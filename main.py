@@ -25,6 +25,10 @@ def robot():
 def vestige():
     return render_template("vestige.html", title="Vestige")
 
+@app.route("/projet/hydrache")
+def hydrache():
+    return render_template("hydrache.html", title="Hydra'che")
+
 @app.route("/contact", methods=["GET", "POST"])
 def formulaire():
     if request.method == "POST":

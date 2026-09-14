@@ -135,6 +135,67 @@ a {
     gap: 1.5rem;
 }
 
+.vestigeImg {
+    width: 65%;
+    height: auto;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-width: 500px;
+    margin: 1rem auto 0;
+}
+
+.contactForm label {
+    color: var(--milk-accent-2);
+    margin-top: 0.5rem;
+}
+
+.contactForm input,
+.contactForm textarea {
+    font-family: inherit;
+    font-size: 1.1rem;
+    background: var(--milk-bg-2);
+    color: var(--milk-panel);
+    border: 2px solid var(--milk-line);
+    border-radius: 6px;
+    padding: 0.5rem;
+}
+
+.contactForm button {
+    margin-top: 1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    background: var(--milk-accent-2);
+    color: var(--milk-ink);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.contactForm button:hover {
+    background: #ba56a2;
+}
+
+.flash {
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.flash-success {
+    background: rgba(92, 114, 103, 0.3);
+    color: #b5d6c4;
+}
+
+.flash-error {
+    background: rgba(214, 59, 176, 0.2);
+    color: #d63bb0;
+}
+
 @media (max-width: 480px) {
     nav {
         flex-wrap: wrap;
@@ -154,5 +215,9 @@ a {
     .teamImg {
         width: 70%;
         order: 0;
+    }
+
+    .vestigeImg {
+        width: 100%;
     }
 }

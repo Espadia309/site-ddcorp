@@ -3,7 +3,8 @@
     <img src="{{ url_for('static',filename='images/Logo_Ddcorp_2.png') }}"  width="50" height="50" alt="Logo DDcorp"/>
     <span><em>Home</em></span>
     </a>
-  <a href="{{ url_for('equipe') }}" {% if request.path == url_for('equipe') %}class="active"{% endif %}>Équipe</a>
+    <a href="{{ url_for('equipe') }}" {% if request.path == url_for('equipe') %}class="active"{% endif %}>Équipe</a>
     <a href="{{ url_for('projet') }}" {% if request.path.startswith('/projet') %}class="active"{% endif %}>Projets</a>
     <a href="{{ url_for('robot') }}" {% if request.path == url_for('robot') %}class="active"{% endif %}>Robot Game</a>
+    <a href="{{ url_for('formulaire') }}" {% if request.path == url_for('formulaire') %}class="active"{% endif %}>Contact</a>
 </nav>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, msg in messages %}
+            <p class="flash flash-{{ category }}">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('formulaire') }}" class="contactForm">
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" name="nom" required>
+    <label for="email">Email</label>
+    <input type="text" id="email" name="email" required>
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="6" required></textarea>
+    <button type="submit">Envoyer</button>
+</form>
+{% endblock %}

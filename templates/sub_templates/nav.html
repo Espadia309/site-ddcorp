@@ -5,7 +5,8 @@
     </a>
     <a href="{{ url_for('equipe') }}" {% if request.path == url_for('equipe') %}class="active"{% endif %}>Équipe</a>
     <a href="{{ url_for('projet') }}" {% if request.path.startswith('/projet') %}class="active"{% endif %}>Projets</a>
-    <a href="{{ url_for('robot') }}" {% if request.path == url_for('robot') %}class="active"{% endif %}>Robot Game</a>
+    <a href="{{ url_for('robot') }}" {% if request.path.startswith('/robot') %}class="active"{% endif %}>Robot Game</a>
+    <a href="{{ url_for('recompenses') }}" {% if request.path.startswith('/récompenses') %}class="active"{% endif %}>Récompenses</a>
     <a href="{{ url_for('actus') }}" {% if request.path == url_for('actus') %}class="active"{% endif %}>Actualités</a>
     <a href="{{ url_for('formulaire') }}" {% if request.path == url_for('formulaire') %}class="active"{% endif %}>Contact</a>
 </nav>

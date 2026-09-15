@@ -151,6 +151,14 @@ a {
     margin-right: auto;
 }
 
+.coupesImg {
+    width: 40%;
+    height: auto;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .contactForm {
     display: flex;
     flex-direction: column;
@@ -233,6 +241,10 @@ a {
     }
 
     .hydracheImg {
-      width: 80%
+      width: 80%;
+    }
+
+    .coupesImg {
+      widht: 80%;
     }
 }

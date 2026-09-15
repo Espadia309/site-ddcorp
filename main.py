@@ -13,9 +13,9 @@ def home():
 def equipe():
     return render_template("equipe.html", title="Équipe")
 
-@app.route("/equipe/prix")
-def prix():
-    return render_template("prix.html", title="Prix")
+@app.route("/récompenses")
+def recompenses():
+    return render_template("recompenses.html", title="Récompenses")
 
 @app.route("/projet")
 def projet():

@@ -167,6 +167,24 @@ a {
     margin-left: auto;
 }
 
+.screensHydrache, .screensJeu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.screensHydrache img {
+    width: 30%;
+    height: auto;
+}
+
+.screensJeu img {
+    width: 40%;
+    height: auto;
+}
+
 .contactForm {
     display: flex;
     flex-direction: column;

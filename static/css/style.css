@@ -152,7 +152,15 @@ a {
 }
 
 .coupesImg {
-    width: 40%;
+    width: 70%;
+    height: auto;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.coupesAutreImg {
+    width: 50%;
     height: auto;
     display: block;
     margin-right: auto;
@@ -240,11 +248,8 @@ a {
         width: 100%;
     }
 
-    .hydracheImg {
-      width: 80%;
-    }
-
-    .coupesImg {
+    .coupesImg, .hydracheImg, .coupesAutreImg {
       widht: 80%;
     }
+
 }

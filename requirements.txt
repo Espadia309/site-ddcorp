@@ -1,2 +1,4 @@
-flask
+Flask
+python-dotenv
+Flask-Mail
 gunicorn

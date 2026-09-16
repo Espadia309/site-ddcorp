@@ -1,13 +1,22 @@
 from flask import *
+from flask_mail import Mail, Message
 from dotenv import load_dotenv
-import os
 from markupsafe import escape
+import os
 
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ_get("SECRET_KEY")
+app.secret_key = os.environ.get("SECRET_KEY")
 
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
+
+mail = Mail(app)
 
 @app.route("/")
 def home():
@@ -47,12 +56,22 @@ def formulaire():
         nom = request.form.get("nom", "").strip()
         email = request.form.get("email", "").strip()
         message = request.form.get("message", "").strip()
-        
         if not nom or not email or not message:
-            flash("Tout les champs doivent être remplis.", "error")
+            flash("Tous les champs doivent être remplis.", "error")
         else:
-            flash("Votre message a bien été envoyé, merci !", "success")
-            print(f"Nouveau message de {nom} ({email}): {message}")
+            try:
+                msg = Message(
+                    subject=f"Nouveau message de {nom} (site ddcorp)",
+                    recipients=[os.environ.get("MAIL_RECIPIENT")],
+                    body=f"Nom: {nom}\nEmail: {email}\n\nMessage:\n{message}",
+                    reply_to=email
+                )
+                mail.send(msg)
+                flash("Votre message a bien été envoyé, merci !", "success")
+            except Exception as e:
+                print(f"Erreur d'envoi d'email {e}")
+                flash("Une erreur est survenue, veuillez réessayer plus tard.", "error")
+
             return redirect(url_for("formulaire"))
     return render_template("formulaire.html", title="Contact")
 

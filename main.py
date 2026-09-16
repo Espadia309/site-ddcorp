@@ -1,8 +1,12 @@
 from flask import *
+from dotenv import load_dotenv
+import os
 from markupsafe import escape
 
+load_dotenv()
+
 app = Flask(__name__)
-app.secret_key = "_5y#2LF4Q8z\n4xec]/"
+app.secret_key = os.environ_get("SECRET_KEY")
 
 
 @app.route("/")

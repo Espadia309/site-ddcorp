@@ -1,21 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, msg in messages %}
-            <p class="flash flash-{{ category }}">{{ msg }}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
+<form id="contactForm" class="contactForm">
+    <label for="objet">Objet</label>
+    <input type="text" id="objet" name="objet" required>
 
-<form method="POST" action="{{ url_for('formulaire') }}" class="contactForm">
-    <label for="nom">Nom</label>
-    <input type="text" id="nom" name="nom">
-    <label for="email">Email</label>
-    <input type="text" id="email" name="email">
     <label for="message">Message</label>
-    <textarea id="message" name="message" rows="6"></textarea>
+    <textarea id="message" name="message" rows="6" required></textarea>
+
     <button type="submit">Envoyer</button>
 </form>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const objet = document.getElementById("objet").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!objet || !message) {
+        alert("Merci de remplir tous les champs.");
+        return;
+    }
+
+    const subject = encodeURIComponent(objet);
+    const body = encodeURIComponent(message);
+
+    window.location.href = `mailto:ddcorp2024@gmail.com?subject=${subject}&body=${body}`;
+
+    alert("Merci pour votre message !");
+    this.reset();
+});
+</script>
 {% endblock %}

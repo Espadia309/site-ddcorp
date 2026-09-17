@@ -1,25 +1,38 @@
 from flask import *
-from flask_mail import Mail, Message
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from dotenv import load_dotenv
 from markupsafe import escape
+import firebase_admin
+from firebase_admin import credentials, firestore
+from google.cloud.firestore_v1 import Increment
 import os
 
 load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY")
+cred = credentials.Certificate("firebase_service_account.json")
+firebase_admin.initialize_app(cred)
 
-app.config["MAIL_SERVER"] = "smtp.gmail.com"
-app.config["MAIL_PORT"] = 587
-app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
+db = firestore.client()
 
-mail = Mail(app)
+def increment_views():
+    ref = db.collection("site_stats").document("main")
+    ref.set(
+        {"views": Increment(1)},
+        merge=True
+    )
+
+def get_views():
+    ref = db.collection("site_stats").document("main")
+    doc = ref.get()
+    if doc.exists:
+        return doc.to_dict().get("views", 0)
+    return 0
 
 @app.route("/")
 def home():
+    increment_views()
     return render_template("home.html",title="Bienvenue")
 
 @app.route("/equipe")
@@ -50,34 +63,21 @@ def vestige():
 def hydrache():
     return render_template("hydrache.html", title="Hydra'che")
 
-@app.route("/contact", methods=["GET", "POST"])
+@app.route("/contact")
 def formulaire():
-    if request.method == "POST":
-        nom = request.form.get("nom", "").strip()
-        email = request.form.get("email", "").strip()
-        message = request.form.get("message", "").strip()
-        if not nom or not email or not message:
-            flash("Tous les champs doivent être remplis.", "error")
-        else:
-            try:
-                msg = Message(
-                    subject=f"Nouveau message de {nom} (site ddcorp)",
-                    recipients=[os.environ.get("MAIL_RECIPIENT")],
-                    body=f"Nom: {nom}\nEmail: {email}\n\nMessage:\n{message}",
-                    reply_to=email
-                )
-                mail.send(msg)
-                flash("Votre message a bien été envoyé, merci !", "success")
-            except Exception as e:
-                print(f"Erreur d'envoi d'email {e}")
-                flash("Une erreur est survenue, veuillez réessayer plus tard.", "error")
-
-            return redirect(url_for("formulaire"))
     return render_template("formulaire.html", title="Contact")
+
+@app.route("/admin")
+def admin():
+    return render_template("admin.html", title="Dashboard Admin")
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html", title="Page Introuvable"), 404
+
+@app.context_processor
+def inject_views():
+    return {"views": get_views()}
 
 if __name__ == "__main__":
     app.run()

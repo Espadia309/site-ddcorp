@@ -1,4 +1,4 @@
 Flask
 python-dotenv
-Flask-Mail
+firebase_admin
 gunicorn

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form class="contactForm" method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.password.label }}
+    {{ form.password() }}
+
+    {{ form.submit(class="formSubmit") }}
+</form>
+
+{% if error %}
+    <p>{{ error }}</p>
+{% endif %}
+
+{% endblock %}

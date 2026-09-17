@@ -122,6 +122,10 @@ a {
     margin-right: auto;
 }
 
+.deco {
+    justify-content: center;
+}
+
 .teamImg {
     width: 40%;
     height: auto;
@@ -223,6 +227,26 @@ a {
 
 .contactForm button:hover {
     background: #ba56a2;
+}
+
+.formSubmit:hover {
+    background: #ba56a2;
+}
+
+.contactForm .formSubmit {
+    margin-top: 1rem;
+    font-family: inherit;
+    font-size: 1.2rem;
+    background-color: var(--milk-accent-2);
+    color: var(--milk-ink);
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.contactForm .formSubmit:hover {
+    background-color: #ba56a2;
 }
 
 .flash {

@@ -8,5 +8,8 @@
     <a href="{{ url_for('robot') }}" {% if request.path.startswith('/robot') %}class="active"{% endif %}>Robot Game</a>
     <a href="{{ url_for('recompenses') }}" {% if request.path.startswith('/récompenses') %}class="active"{% endif %}>Récompenses</a>
     <a href="{{ url_for('actus') }}" {% if request.path == url_for('actus') %}class="active"{% endif %}>Actualités</a>
+    {% if current_user.is_authenticated %}
+    <a href="{{ url_for('admin') }}" {% if request.path == url_for('admin') %}class="active"{% endif %}>Dashboard</a>
+    {% endif %}
     <a href="{{ url_for('formulaire') }}" {% if request.path == url_for('formulaire') %}class="active"{% endif %}>Contact</a>
 </nav>

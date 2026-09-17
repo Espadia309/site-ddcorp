@@ -1,4 +1,5 @@
 Flask
 python-dotenv
 firebase_admin
+flask_login
 gunicorn

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+ 
+{% block content %}
+<p><a href="{{ url_for('admin') }}">← Retour au tableau de bord</a></p>
+ 
+<p>Le champ « Contenu » d'un article s'écrit en <strong>Markdown</strong> : une façon simple de formater du texte avec quelques symboles.</p>
+ 
+<h2>Titres</h2>
+<pre># Grand titre
+## Titre moyen
+### Petit titre</pre>
+ 
+<h2>Gras et italique</h2>
+<pre>**ce texte est en gras**
+*ce texte est en italique*</pre>
+ 
+<h2>Liens</h2>
+<pre>[texte affiché](https://exemple.com)</pre>
+<p>Exemple : <code>[notre Instagram](https://www.instagram.com/dd_corp_lego_team/)</code></p>
+ 
+<h2>Listes</h2>
+<pre>- premier élément
+- deuxième élément
+- troisième élément</pre>
+ 
+<h2>Paragraphes</h2>
+<p>Une ligne vide entre deux blocs de texte crée un nouveau paragraphe. Un simple retour à la ligne est aussi respecté.</p>
+ 
+<h2>Citation</h2>
+<pre>&gt; une phrase mise en avant</pre>
+
+<h2>Pour le reste</h2>
+<p>On peut se renseigner facilement sur le web, et si vous demandez a l'IA de faire un message (le faites pas c'est pas EspadiaFriendly) préciser de le faire en Markdown</p>
+{% endblock %}

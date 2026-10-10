@@ -142,6 +142,11 @@ def formulaire():
 def admin():
     return render_template("admin.html", title="Dashboard Admin", posts=get_posts())
 
+@app.route("/admin/post/guide")
+@login_required
+def markdown():
+    return render_template("markdown.html", title="Guide")
+
 @app.route("/admin/post/new", methods=["GET", "POST"])
 @login_required
 def new_post():

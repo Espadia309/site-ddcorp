@@ -7,6 +7,13 @@
       <h2>{{ post.title }}</h2>
       <p class="postMeta">{{ post.created_at | paris }}</p>
       <div class="postContent">{{ post.content | markdown | safe }}</div>
+      {% if post.images %}
+      <div class="postGallery{% if post.images | length == 1 %} single{% endif %}">
+        {% for image_id in post.images %}
+          <a href="{{ url_for('serve_image', image_id=image_id) }}" target="_blank" rel="noopener"><img src="{{ url_for('serve_image', image_id=image_id) }}" alt="Image de l'actu « {{ post.title }} »" loading="lazy"></a>
+        {% endfor %}
+      </div>
+      {% endif %}
     </article>
     {% if not loop.last %}<hr class="postDivider">{% endif %}
   {% endfor %}

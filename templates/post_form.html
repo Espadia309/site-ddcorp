@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form class="contactForm" method="POST">
+<form class="contactForm" method="POST" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
 
     {{ form.title.label }}
@@ -10,7 +10,153 @@
     {{ form.content.label }}
     {{ form.content() }}
 
+    {% if post_images %}
+    <label>Images actuelles (coche celles à supprimer)</label>
+    <div class="postGallery galleryEdit">
+        {% for image_id in post_images %}
+        <div class="galleryItem">
+            <img src="{{ url_for('serve_image', image_id=image_id) }}" alt="">
+            <label><input type="checkbox" name="remove_images" value="{{ image_id }}"> Supprimer</label>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {{ form.images.label }}
+
+    <div id="dropzone" class="dropzone" tabindex="0" role="button" hidden
+         aria-label="Ajouter des images : glisse-les ici ou appuie pour choisir">
+        <span class="dropTitle">Glisse tes images ici</span>
+        <span class="dropHint">ou clique pour les choisir · tu peux aussi coller un screen avec Ctrl+V</span>
+    </div>
+    <div id="previews" class="postGallery galleryEdit"></div>
+    <p id="dropMsg" class="dropMsg" aria-live="polite"></p>
+
+    {{ form.images(accept="image/*") }}
+    {% for e in form.images.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+    {% if error %}
+        <p class="flash flash-error">{{ error }}</p>
+    {% endif %}
+
     {{ form.submit(class="formSubmit") }}
 </form>
+
+<script>
+(function () {
+    const input = document.getElementById("images");
+    const zone = document.getElementById("dropzone");
+    const previews = document.getElementById("previews");
+    const msg = document.getElementById("dropMsg");
+
+    // Old browsers without DataTransfer keep the plain file picker.
+    try { new DataTransfer(); } catch (e) { return; }
+    zone.hidden = false;
+    input.style.display = "none";
+
+    const MAX_FILES = 8;
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;
+    const MAX_TOTAL_BYTES = 30 * 1024 * 1024;
+    const ALLOWED = /\.(jpe?g|png|gif|webp)$/i;
+
+    let files = [];
+    let urls = [];
+
+    function sameFile(a, b) {
+        return a.name === b.name && a.size === b.size && a.lastModified === b.lastModified;
+    }
+
+    function sync() {
+        // the real <input> is what gets sent with the form
+        const dt = new DataTransfer();
+        files.forEach(f => dt.items.add(f));
+        input.files = dt.files;
+        render();
+    }
+
+    function render() {
+        urls.forEach(u => URL.revokeObjectURL(u));
+        urls = [];
+        previews.innerHTML = "";
+        files.forEach((file, index) => {
+            const url = URL.createObjectURL(file);
+            urls.push(url);
+
+            const item = document.createElement("div");
+            item.className = "galleryItem previewItem";
+
+            const img = document.createElement("img");
+            img.src = url;
+            img.alt = file.name;
+
+            const remove = document.createElement("button");
+            remove.type = "button";
+            remove.className = "removeBtn";
+            remove.textContent = "×";
+            remove.setAttribute("aria-label", "Retirer " + file.name);
+            remove.addEventListener("click", () => {
+                files.splice(index, 1);
+                msg.textContent = "";
+                sync();
+            });
+
+            item.appendChild(img);
+            item.appendChild(remove);
+            previews.appendChild(item);
+        });
+    }
+
+    function add(list) {
+        const problems = [];
+        let total = files.reduce((n, f) => n + f.size, 0);
+        for (const file of Array.from(list)) {
+            if (!ALLOWED.test(file.name)) {
+                problems.push(file.name + " : pas une image jpg, png, gif ou webp");
+            } else if (file.size > MAX_FILE_BYTES) {
+                problems.push(file.name + " : plus de 10 Mo");
+            } else if (files.some(f => sameFile(f, file))) {
+                continue;
+            } else if (files.length >= MAX_FILES) {
+                problems.push("Maximum " + MAX_FILES + " images à la fois");
+                break;
+            } else if (total + file.size > MAX_TOTAL_BYTES) {
+                problems.push(file.name + " : trop lourd au total (30 Mo max)");
+            } else {
+                files.push(file);
+                total += file.size;
+            }
+        }
+        msg.textContent = problems.join(" · ");
+        sync();
+    }
+
+    zone.addEventListener("click", () => input.click());
+    zone.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); }
+    });
+    input.addEventListener("change", () => add(input.files));
+
+    ["dragenter", "dragover"].forEach(type => zone.addEventListener(type, e => {
+        e.preventDefault();
+        zone.classList.add("over");
+    }));
+    ["dragleave", "drop"].forEach(type => zone.addEventListener(type, e => {
+        e.preventDefault();
+        zone.classList.remove("over");
+    }));
+    zone.addEventListener("drop", e => add(e.dataTransfer.files));
+
+    ["dragover", "drop"].forEach(type => window.addEventListener(type, e => {
+        const dragsFiles = e.dataTransfer && Array.from(e.dataTransfer.types || []).includes("Files");
+        if (dragsFiles && !zone.contains(e.target)) e.preventDefault();
+    }));
+
+    document.addEventListener("paste", e => {
+        const pasted = e.clipboardData && e.clipboardData.files;
+        if (pasted && pasted.length) { e.preventDefault(); add(pasted); }
+    });
+})();
+</script>
 
 {% endblock %}

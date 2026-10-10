@@ -2,5 +2,7 @@ Flask
 python-dotenv
 firebase_admin
 flask_login
+tzdata
 flask_wtf
+markdown
 gunicorn

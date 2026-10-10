@@ -291,7 +291,49 @@ a {
     }
 
     .coupesImg, .hydracheImg, .coupesAutreImg {
-      widht: 80%;
+      width: 80%;
     }
 
+}
+
+/* ---- Actualités / admin ---- */
+
+.postCard {
+    margin-bottom: 1rem;
+}
+
+.postContent img {
+    max-width: 100%;
+    height: auto;
+}
+
+.postMeta {
+    opacity: 0.6;
+    font-size: 1.1rem;
+}
+
+.postDivider {
+    border: none;
+    border-top: 2px dashed var(--milk-line);
+    margin: 1.5rem 0;
+}
+
+.adminPosts li {
+    margin-bottom: 0.6rem;
+}
+
+.inlineForm {
+    display: inline;
+}
+
+.linkBtn {
+    background: none;
+    border: none;
+    color: var(--milk-accent-2);
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 0.5rem;
 }

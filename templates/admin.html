@@ -1,7 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Salut les features arrivent bientot</p>
 
-<a href="{{ url_for('logout') }}">Déconnexion</a>
+<p>
+    <a href="{{ url_for('new_post') }}">Créer un nouveau post d'actu</a> ·
+    <a href="{{ url_for('logout') }}">Déconnexion</a>
+</p>
+
+<h2>Posts publiés</h2>
+{% if posts %}
+<ul class="adminPosts">
+  {% for post in posts %}
+  <li>
+    <strong>{{ post.title }}</strong>
+    <span class="postMeta">({{ post.created_at | paris('%d/%m/%Y') }})</span>
+    <a href="{{ url_for('edit_post', post_id=post.id) }}">Modifier</a>
+    <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce post ?');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="linkBtn">Supprimer</button>
+    </form>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Aucun post pour le moment.</p>
+{% endif %}
+
 {% endblock %}

@@ -1,0 +1,68 @@
+.logo,
+.vestigeImg,
+.hydracheImg,
+.coupesImg,
+.coupesAutreImg {
+    display: block;
+    height: auto;
+    margin-inline: auto;
+}
+
+.logo { width: 40%; }           /* home page */
+.vestigeImg { width: 45%; }     /* projects list */
+.hydracheImg { width: 35%; }    /* projects list */
+.coupesImg { width: 70%; }      /* awards + robot: wide photo */
+.coupesAutreImg { width: 50%; } /* awards + robot: other photos */
+
+.teamBlock {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.teamImg {
+    width: 40%;
+    height: auto;
+    flex-shrink: 0;
+    order: 2;
+}
+
+.screensHydrache,
+.screensJeu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.screensHydrache img,
+.screensJeu img {
+    height: auto;
+}
+
+.screensHydrache img { width: 30%; }
+.screensJeu img { width: 40%; }
+
+@media (max-width: 480px) {
+    .teamBlock {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .teamImg {
+        width: 70%;
+        order: 0;
+    }
+
+    .vestigeImg {
+        width: 100%;
+    }
+
+    .coupesImg,
+    .hydracheImg,
+    .coupesAutreImg {
+        width: 80%;
+    }
+}

@@ -1,0 +1,40 @@
+.postCard {
+    margin-bottom: 1rem;
+}
+
+.postMeta {
+    opacity: 0.6;
+    font-size: 1.1rem;
+}
+
+.postDivider {
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 2px dashed var(--milk-line);
+}
+
+.postContent img {
+    max-width: 100%;
+    height: auto;
+}
+
+.postGallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin: 0.75rem 0;
+}
+
+.postGallery img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 6px;
+}
+
+.postGallery.single img {
+    max-height: 500px;
+}

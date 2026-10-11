@@ -1,0 +1,49 @@
+:root {
+    /* palette */
+    --milk-bg: #171f26;
+    --milk-bg-2: #2b3844;
+    --milk-panel: #cbbfa8;
+    --milk-ink: #12151a;
+    --milk-accent: #5c7267;
+    --milk-accent-2: #d63bb0;
+    --milk-line: #3d4750;
+    --milk-page: #282b30;
+    --milk-accent-2-hover: #ba56a2;
+    --milk-heading: #d77ec1;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "VT323", "Courier New", monospace;
+    font-size: 1.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+    color: var(--milk-panel);
+    min-height: 100vh;
+    background: var(--milk-page);
+    letter-spacing: 0.02em;
+}
+
+h1 {
+    color: var(--milk-accent-2);
+    font-size: 2.7rem;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    color: var(--milk-heading);
+    font-size: 1.85rem;
+}
+
+p,
+li {
+    line-height: 1.5;
+}
+
+a {
+    color: var(--milk-accent-2);
+}

@@ -50,6 +50,13 @@ def get_views():
         return doc.to_dict().get("views", 0)
     return 0
 
+def reset_views():
+    ref = db.collection("site_stats").document("main")
+    ref.set(
+        {"views": 0},
+        merge=True
+    )
+
 #posts stuff (get_posts() returns a list and get_post(post_id) return a post by it's id)
 def get_posts(limit=None):
     query = db.collection("posts").order_by("created_at", direction=firestore.Query.DESCENDING)
@@ -58,7 +65,6 @@ def get_posts(limit=None):
     docs = query.stream()
     return [{"id": d.id, **d.to_dict()} for d in docs]
 
- 
 def get_post(post_id):
     doc = db.collection("posts").document(post_id).get()
     if doc.exists:
@@ -137,7 +143,7 @@ def paris_filter(dt, fmt="%d/%m/%Y à %Hh%M"):
     if dt is None:
         return ""
     return dt.astimezone(PARIS).strftime(fmt)
- 
+
 @app.template_filter("markdown")
 def markdown_filter(text):
     return markdown_lib.markdown(text, extensions=["nl2br", "fenced_code", "sane_lists"])
@@ -291,6 +297,12 @@ def delete_post(post_id):
     if post is not None:
         db.collection("posts").document(post_id).delete()
         delete_images(post.get("images", []))
+    return redirect(url_for("admin"))
+
+@app.route("/admin/reset_views", methods=["GET","POST"])
+@login_required
+def reset():
+    reset_views()
     return redirect(url_for("admin"))
 
 @app.route("/admin/login", methods=["GET", "POST"])

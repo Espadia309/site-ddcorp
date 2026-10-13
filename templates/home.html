@@ -1,13 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<img src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}" alt="Logo DD Corp" class="logo">
-<h2>Bienvenue sur le site de la <strong>DD Corp</strong>, l'équipe de robotique du <strong>Lycée Gustave Eiffel</strong></h2>
-<ul>
-    <li>Découvrez <a href="{{ url_for('equipe') }}">qui nous sommes</a></li>
-    <li>Aprennez en plus sur nos <a href="{{ url_for('projet') }}">projets d'innovation</a></li>
-    <li>Observez nos magnifiques perfommances en <a href="{{ url_for('robot') }}">robot game</a></li>
-    <li>Renseignez vous sur nos <a href="{{  url_for('actus') }}">actualitées</a></li>
-    <li>Si vous avez des questions, une remarque ou que vous souhaitez nous soutenir : envoyez nous un <a href="{{ url_for('formulaire') }}">message</a> !</li>
-</ul>
+<div class="cards-container">
+  <a href="{{ url_for('equipe') }}" class="card card-equipe">
+      <div class=card-text>
+          <h2>Qui nous sommes</h2>
+          <p>Découvrez l'équipe</p>
+      </div>
+  </a>
+  <a href="{{ url_for('projet') }}" class="card card-projet">
+      <div class=card-text>
+          <h2>Projet d'innovation</h2>
+          <p>Nos idées et nos projets</p>
+      </div>
+  </a>
+  <a href="{{ url_for('robot') }}" class="card card-robot">
+      <div class=card-text>
+          <h2>Robot game</h2>
+          <p>Nos perfommances en robotique</p>
+      </div>
+  </a>
+  <a href="{{ url_for('recompenses') }}" class="card card-recompenses">
+      <div class=card-text>
+          <h2>Récompenses</h2>
+          <p>Tous nos trophés et récompenses</p>
+      </div>
+  </a>
+  <a href="{{ url_for('actus') }}" class="card card-actus">
+      <div>
+          <h2>Actualitées</h2>
+          <p>Nos actualitées les plus récentes</p>
+      </div>
+  </a>
+  <a href="{{ url_for('formulaire') }}" class="card card-contact">
+      <div>
+          <h2>Contact</h2>
+          <p>Si vous souhaitez nous envoyer un message, c'est ici !</p>
+      </div>
+  </a>
+</div>
 {% endblock %}

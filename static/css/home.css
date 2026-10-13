@@ -1,0 +1,109 @@
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.card {
+    min-height: 400px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--milk-bg-2);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+}
+
+.card-equipe {
+    background-image:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),
+        url("/static/images/Team.png");
+}
+
+.card-projet {
+    background-image:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),
+    url("/static/images/Logo_Vestige.png");
+}
+
+.card-robot {
+    background-image: 
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),
+    url("/static/images/Robot.jpg");
+}
+
+.card-recompenses {
+    background-image:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),   
+    url("/static/images/Coupes_1.jpg")
+}
+
+.card-actus {
+    background-image:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),
+    url("/static/images/actu.png")
+}
+
+.card-contact {
+    background-image:
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0.05) 80%
+        ),
+    url("/static/images/contact.png")
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover h2 {
+    color: var(--milk-accent-2-hover);
+}
+
+.card h2 {
+    margin-bottom: 0px;
+}
+
+.card p {
+    margin: 0;
+    color: var(--milk-panel);
+}
+
+@media (max-width: 600px) {
+    .cards-container {
+        grid-template-columns: 1fr;
+    }
+}

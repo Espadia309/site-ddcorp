@@ -179,7 +179,7 @@ class NewPost(FlaskForm):
 @app.route("/")
 def home():
     increment_views()
-    return render_template("home.html",title="Bienvenue") 
+    return render_template("home.html",title="Bienvenue sur le site de la DD Corp !")
 
 @app.route("/equipe")
 def equipe():

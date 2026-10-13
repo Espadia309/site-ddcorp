@@ -12,10 +12,6 @@
     --milk-heading: #d77ec1;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 body {
     font-family: "PT Sans", sans-serif;
     font-size: 1.5rem;

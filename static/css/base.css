@@ -12,6 +12,20 @@
     --milk-heading: #d77ec1;
 }
 
+.lightmode {
+    /* palette — light mode */
+    --milk-bg: #f0ebe2;
+    --milk-bg-2: #e5ddd0;
+    --milk-panel: #343b3a;
+    --milk-ink: #fffdf8;
+    --milk-accent: #5c7267;
+    --milk-accent-2: #b52e8c;
+    --milk-line: #d2c7b8;
+    --milk-page: #faf7f1;
+    --milk-accent-2-hover: #92236f;
+    --milk-heading: #98447e;
+}
+
 @font-face {
     font-family: FFVII;
     src: url("/static/fonts/brevia-font-family/HvDTrial_Brevia-SemiBold-BF6493a40662f78.otf")

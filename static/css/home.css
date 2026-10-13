@@ -100,7 +100,7 @@
 
 .card p {
     margin: 0;
-    color: var(--milk-panel);
+    color: var(--milk-heading);
 }
 
 @media (max-width: 600px) {

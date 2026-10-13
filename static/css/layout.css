@@ -44,6 +44,65 @@ nav a.active {
     background: var(--milk-accent-2-hover);
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    background-color: var(--milk-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    color: var(--milk-panel);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--milk-accent-2-hover);
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#theme-switch {
+    height: 50px;
+    width: 50px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--milk-ink);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#theme-switch svg {
+    fill: var(--milk-panel)
+}
+
+#theme-switch svg:last-child{
+    display: none;
+}
+
+.lightmode #theme-switch svg:first-child {
+    display: none;
+}
+
+.lightmode #theme-switch svg:last-child {
+    display: block;
+}
+
 main {
     max-width: 900px;
     margin: 0 auto;

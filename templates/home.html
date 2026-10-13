@@ -2,22 +2,16 @@
 
 {% block content %}
 <div class="cards-container">
+  <a href="{{ url_for('actus') }}" class="card card-actus">
+      <div>
+          <h2>Actualitées</h2>
+          <p>Nos actualitées les plus récentes</p>
+      </div>
+  </a>
   <a href="{{ url_for('equipe') }}" class="card card-equipe">
       <div class=card-text>
           <h2>Qui nous sommes</h2>
           <p>Découvrez l'équipe</p>
-      </div>
-  </a>
-  <a href="{{ url_for('projet') }}" class="card card-projet">
-      <div class=card-text>
-          <h2>Projet d'innovation</h2>
-          <p>Nos idées et nos projets</p>
-      </div>
-  </a>
-  <a href="{{ url_for('robot') }}" class="card card-robot">
-      <div class=card-text>
-          <h2>Robot game</h2>
-          <p>Nos perfommances en robotique</p>
       </div>
   </a>
   <a href="{{ url_for('recompenses') }}" class="card card-recompenses">
@@ -26,10 +20,16 @@
           <p>Tous nos trophés et récompenses</p>
       </div>
   </a>
-  <a href="{{ url_for('actus') }}" class="card card-actus">
-      <div>
-          <h2>Actualitées</h2>
-          <p>Nos actualitées les plus récentes</p>
+  <a href="{{ url_for('robot') }}" class="card card-robot">
+      <div class=card-text>
+          <h2>Robot game</h2>
+          <p>Nos perfommances en robotique</p>
+      </div>
+  </a>
+  <a href="{{ url_for('projet') }}" class="card card-projet">
+      <div class=card-text>
+          <h2>Projet d'innovation</h2>
+          <p>Nos idées et nos projets</p>
       </div>
   </a>
   <a href="{{ url_for('formulaire') }}" class="card card-contact">

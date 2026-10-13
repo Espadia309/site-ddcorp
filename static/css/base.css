@@ -12,8 +12,13 @@
     --milk-heading: #d77ec1;
 }
 
+@font-face {
+    font-family: FFVII;
+    src: url("/static/fonts/brevia-font-family/HvDTrial_Brevia-SemiBold-BF6493a40662f78.otf")
+}
+
 body {
-    font-family: "PT Sans", sans-serif;
+    font-family: "FFVII", sans-serif;
     font-size: 1.5rem;
     max-width: 1200px;
     margin: 0 auto;

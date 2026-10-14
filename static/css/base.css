@@ -14,16 +14,16 @@
 
 .lightmode {
     /* palette — light mode */
-    --milk-bg: #f0ebe2;
+    --milk-bg: #ede1cc;
     --milk-bg-2: #e5ddd0;
     --milk-panel: #343b3a;
     --milk-ink: #fffdf8;
     --milk-accent: #5c7267;
-    --milk-accent-2: #b52e8c;
+    --milk-accent-2: #c53399;
     --milk-line: #d2c7b8;
     --milk-page: #faf7f1;
-    --milk-accent-2-hover: #92236f;
-    --milk-heading: #98447e;
+    --milk-accent-2-hover: #ad2883;
+    --milk-heading: #a84b8b;
 }
 
 @font-face {

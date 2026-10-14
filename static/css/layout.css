@@ -53,6 +53,14 @@
     transition: background 0.15s ease, color 0.15s ease;
 }
 
+.site-nav .nav-logo {
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.site-nav .nav-logo:hover {
+    background-color: var(--milk-accent-2);
+}
+
 .site-nav .nav-links > a:hover,
 .site-nav .dropdown-toggle:hover {
     background: var(--milk-accent-2);

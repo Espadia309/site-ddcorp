@@ -6,3 +6,5 @@ from filters import PARIS
 COMPETITIONS = [
     ("Qualification régionale", datetime(2027, 2, 27, 9, 0, tzinfo=PARIS)),
 ]
+
+POINTS_TOTAL = 370

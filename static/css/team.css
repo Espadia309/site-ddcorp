@@ -1,10 +1,31 @@
+/* ---- compte à rebours ---- */
 .countdown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     margin: 0.5rem 0 1.25rem;
     padding: 1rem;
     text-align: center;
     background: var(--milk-bg-2);
     border: 2px solid var(--milk-line);
     border-radius: 10px;
+}
+
+.countdownBody {
+    flex: 1;
+    min-width: 0;
+}
+
+.countdownImg {
+    flex-shrink: 0;
+    width: 100px;
+    height: auto;
+}
+
+/* pour retourner une image : ajoute class="countdownImg flip" dans team.html */
+.countdownImg.flip {
+    transform: scaleX(-1);
 }
 
 .countdownName {
@@ -35,6 +56,22 @@
 .countdownUnit span {
     font-size: 1rem;
     opacity: 0.7;
+}
+
+/* ---- total de points ---- */
+.pointsBox {
+    margin: 0 0 1.25rem;
+    padding: 0.6rem 1rem;
+    text-align: center;
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-radius: 10px;
+}
+
+.pointsBox strong {
+    margin-left: 0.5rem;
+    color: var(--milk-accent-2);
+    font-size: 2rem;
 }
 
 /* ---- tableau des tâches ---- */
@@ -79,6 +116,7 @@
 }
 
 .taskCard {
+    position: relative;
     margin-bottom: 0.7rem;
     padding: 0.7rem 0.8rem;
     background: var(--milk-bg-2);
@@ -91,6 +129,33 @@
     margin: 0 0 0.3rem;
     font-size: 1.2rem;
     overflow-wrap: anywhere;
+}
+
+/* toute la carte est cliquable : le lien du titre est étiré sur la carte entière */
+.taskCard h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+}
+
+.taskCard:hover {
+    box-shadow: 0 0 0 2px var(--milk-accent-2);
+}
+
+.taskCard h3 a:focus-visible {
+    outline: none;
+}
+
+.taskCard h3 a:focus-visible::after {
+    outline: 2px solid var(--milk-accent-2);
+    outline-offset: 2px;
+}
+
+/* les boutons restent au-dessus du lien étiré, donc cliquables eux aussi */
+.taskCard .taskActions form {
+    position: relative;
+    z-index: 1;
 }
 
 .taskCard.status-en_cours {
@@ -186,6 +251,10 @@
 }
 
 @media (max-width: 800px) {
+    .countdownImg {
+        width: 56px;
+    }
+
     .board {
         grid-template-columns: 1fr;
     }

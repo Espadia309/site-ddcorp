@@ -9,7 +9,7 @@ from data import (TASK_STATUSES, add_message, create_task, delete_task,
                   set_task_status)
 from filters import PARIS
 from forms import MessageForm, TaskForm
-from team_config import COMPETITIONS
+from team_config import COMPETITIONS, POINTS_TOTAL
 
 bp = Blueprint("team", __name__)
 
@@ -65,7 +65,7 @@ def dashboard():
         by_status["fait"] = by_status["fait"][:DONE_VISIBLE]
 
     return render_template("team.html", title="Espace équipe",
-                           countdown=countdown, later=upcoming[1:4],
+                           countdown=countdown, later=upcoming[1:4], points=POINTS_TOTAL,
                            by_status=by_status, counts=counts, hidden_done=hidden_done,
                            statuses=TASK_STATUSES, names=_names())
 

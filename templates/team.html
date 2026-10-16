@@ -3,6 +3,8 @@
 {% block content %}
 {% if countdown %}
 <section class="countdown" id="countdown" data-target="{{ countdown.iso }}">
+    <img class="countdownImg" src="{{ url_for('static', filename='images/Logo_bioglow.png') }}" alt="" width="100" height="100">
+    <div class="countdownBody">
     <p class="countdownName">{{ countdown.name }} · {{ countdown.date | paris('%d/%m/%Y à %Hh%M') }}</p>
     <p class="countdownTime">
         <span class="countdownUnit"><strong data-unit="d">{{ countdown.days }}</strong><span>jours</span></span>
@@ -15,9 +17,15 @@
         {% for name, when in later %}{{ name }} ({{ when | paris('%d/%m/%Y') }}){% if not loop.last %}, {% endif %}{% endfor %}
     </p>
     {% endif %}
+    </div>
+    <img class="countdownImg" src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}" alt="" width="100" height="100">
 </section>
 {% else %}
 <p class="postMeta">Aucune échéance à venir. Ajoute une date dans <code>team_config.py</code>.</p>
+{% endif %}
+
+{% if points is not none %}
+<p class="pointsBox">Points au total <strong>{{ points }}</strong></p>
 {% endif %}
 
 <p class="centerLine"><a class="bigLink" href="{{ url_for('team.new_task') }}">+ Nouvelle tâche</a></p>

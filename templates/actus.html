@@ -10,7 +10,7 @@
       {% if post.images %}
       <div class="postGallery{% if post.images | length == 1 %} single{% endif %}">
         {% for image_id in post.images %}
-          <a href="{{ url_for('serve_image', image_id=image_id) }}" target="_blank" rel="noopener"><img src="{{ url_for('serve_image', image_id=image_id) }}" alt="Image de l'actu « {{ post.title }} »" loading="lazy"></a>
+          <a href="{{ url_for('public.serve_image', image_id=image_id) }}" target="_blank" rel="noopener"><img src="{{ url_for('public.serve_image', image_id=image_id) }}" alt="Image de l'actu « {{ post.title }} »" loading="lazy"></a>
         {% endfor %}
       </div>
       {% endif %}

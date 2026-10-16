@@ -2,11 +2,17 @@
 
 {% block content %}
 
-<ul>
-  <li><a href="{{ url_for('new_post') }}">Nouveau post d'actualité</a></li>
-  <li><a href="{{ url_for('markdown') }}">Tutoriel d'écriture (Louis en a besoin en gros)</a></li>
-  <li><a href="{{ url_for('reset') }}">Reset le conteur de vues (irréversible)</a></li>
-  <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+<ul class="adminMenu">
+  <li><a href="{{ url_for('admin.new_post') }}">Nouveau post d'actualité</a></li>
+  <li><a href="{{ url_for('admin.users') }}">Gérer les comptes</a></li>
+  <li><a href="{{ url_for('admin.guide') }}">Tutoriel d'écriture (Louis en a besoin en gros)</a></li>
+  <li>
+    <form method="POST" action="{{ url_for('admin.reset') }}" class="inlineForm" onsubmit="return confirm('Remettre le compteur de vues à zéro ? C\'est irréversible.');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="linkBtn">Reset le conteur de vues (irréversible)</button>
+    </form>
+  </li>
+  <li><a href="{{ url_for('auth.logout') }}">Déconnexion</a></li>
 </ul>
 
 <h2>Posts publiés</h2>
@@ -16,8 +22,8 @@
   <li>
     <strong>{{ post.title }}</strong>
     <span class="postMeta">({{ post.created_at | paris('%d/%m/%Y') }})</span>
-    <a href="{{ url_for('edit_post', post_id=post.id) }}">Modifier</a>
-    <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce post ?');">
+    <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Modifier</a>
+    <form method="POST" action="{{ url_for('admin.delete_post', post_id=post.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce post ?');">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button type="submit" class="linkBtn">Supprimer</button>
     </form>

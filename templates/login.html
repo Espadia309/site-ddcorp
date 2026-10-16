@@ -5,14 +5,17 @@
 <form class="contactForm" method="POST">
     {{ form.hidden_tag() }}
 
+    {{ form.username.label }}
+    {{ form.username(autocomplete="username") }}
+
     {{ form.password.label }}
-    {{ form.password() }}
+    {{ form.password(autocomplete="current-password") }}
 
     {{ form.submit(class="formSubmit") }}
 </form>
 
 {% if error %}
-    <p>{{ error }}</p>
+    <p class="flash flash-error">{{ error }}</p>
 {% endif %}
 
 {% endblock %}

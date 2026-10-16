@@ -1,6 +1,6 @@
 <nav class="site-nav">
-    <a class="nav-logo" href="{{ url_for('home') }}"
-       {% if request.path == url_for('home') %}aria-current="page"{% endif %}>
+    <a class="nav-logo" href="{{ url_for('public.home') }}"
+       {% if request.path == url_for('public.home') %}aria-current="page"{% endif %}>
         <img src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}"
              width="50" height="50" alt="DDCORP"/>
         <span><em>Accueil</em></span>
@@ -18,17 +18,17 @@
     </button>
 
     <div class="nav-links" id="nav-links">
-        <a href="{{ url_for('actus') }}"
-           {% if request.path == url_for('actus') %}class="active"{% endif %}>
+        <a href="{{ url_for('public.actus') }}"
+           {% if request.path == url_for('public.actus') %}class="active"{% endif %}>
             Actualités
         </a>
 
-        <a href="{{ url_for('equipe') }}"
-           {% if request.path == url_for('equipe') %}class="active"{% endif %}>
+        <a href="{{ url_for('public.equipe') }}"
+           {% if request.path == url_for('public.equipe') %}class="active"{% endif %}>
             Équipe
         </a>
 
-        <a href="{{ url_for('robot') }}"
+        <a href="{{ url_for('public.robot') }}"
            {% if request.path.startswith('/robot') %}class="active"{% endif %}>
             Robot Game
         </a>
@@ -36,32 +36,38 @@
         <div class="dropdown
             {% if request.path.startswith('/projet') %}current-section{% endif %}">
             <a class="dropdown-toggle"
-               href="{{ url_for('projet') }}"
+               href="{{ url_for('public.projet') }}"
                {% if request.path.startswith('/projet') %}aria-current="page"{% endif %}>
                 Projets
                 <span class="dropdown-arrow" aria-hidden="true">▾</span>
             </a>
 
             <div class="dropdown-content">
-                <a href="{{ url_for('vestige') }}">Vestige</a>
-                <a href="{{ url_for('hydrache') }}">Hydrache</a>
+                <a href="{{ url_for('public.vestige') }}">Vestige</a>
+                <a href="{{ url_for('public.hydrache') }}">Hydrache</a>
             </div>
         </div>
 
-        <a href="{{ url_for('recompenses') }}"
-           {% if request.path == url_for('recompenses') %}class="active"{% endif %}>
+        <a href="{{ url_for('public.recompenses') }}"
+           {% if request.path == url_for('public.recompenses') %}class="active"{% endif %}>
             Récompenses
         </a>
 
         {% if current_user.is_authenticated %}
-        <a href="{{ url_for('admin') }}"
-           {% if request.path == url_for('admin') %}class="active"{% endif %}>
-            Dashboard
-        </a>
+            {% if current_user.is_admin %}
+            <a href="{{ url_for('admin.dashboard') }}"
+               {% if request.path.startswith('/admin') %}class="active"{% endif %}>
+                Admin
+            </a>
+            {% endif %}
+            <a href="{{ url_for('account.account') }}"
+               {% if request.path.startswith('/compte') %}class="active"{% endif %}>
+                Mon compte
+            </a>
         {% endif %}
 
-        <a href="{{ url_for('formulaire') }}"
-           {% if request.path == url_for('formulaire') %}class="active"{% endif %}>
+        <a href="{{ url_for('public.formulaire') }}"
+           {% if request.path == url_for('public.formulaire') %}class="active"{% endif %}>
             Contact
         </a>
 
@@ -82,4 +88,3 @@
         </button>
     </div>
 </nav>
-

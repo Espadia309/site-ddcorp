@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><a href="{{ url_for('admin.dashboard') }}">← Retour au tableau de bord</a></p>
+
+<h2>Comptes</h2>
+<ul class="adminPosts">
+  {% for u in users %}
+  <li>
+    <strong>{{ u.username }}</strong>
+    <span class="postMeta">
+      ({{ 'admin' if u.role == 'admin' else 'membre' }}{% if u.must_change_password %}, mot de passe temporaire{% endif %}{% if u.created_at %}, créé le {{ u.created_at | paris('%d/%m/%Y') }}{% endif %})
+    </span>
+    {% if u.id == current_user.id %}
+      <span class="postMeta">c'est toi</span>
+    {% else %}
+    <form method="POST" action="{{ url_for('admin.reset_user_password', user_id=u.id) }}" class="inlineForm" onsubmit="return confirm('Générer un nouveau mot de passe temporaire pour ce compte ?');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="linkBtn">Nouveau mot de passe</button>
+    </form>
+    <form method="POST" action="{{ url_for('admin.delete_account', user_id=u.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce compte ?');">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <button type="submit" class="linkBtn">Supprimer</button>
+    </form>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+<h2>Nouveau compte</h2>
+<p>Un mot de passe temporaire est généré et affiché une seule fois. La personne devra le changer à sa première connexion.</p>
+<form class="contactForm" method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.username.label }}
+    {{ form.username() }}
+    {% for e in form.username.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ form.role.label }}
+    {{ form.role() }}
+
+    {{ form.submit(class="formSubmit") }}
+</form>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Cette page n'existe pas !</p>
-<p>Retournez à l'<a href="{{ url_for('home') }}">accueil</a> pour ne pas rester perdu.</p>
+<p>{{ message or "Cette page n'existe pas !" }}</p>
+<p>Retournez à l'<a href="{{ url_for('public.home') }}">accueil</a> pour ne pas rester perdu.</p>
 {% endblock %}

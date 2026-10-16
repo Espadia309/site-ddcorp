@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    Connecté en tant que <strong>{{ current_user.username }}</strong>
+    ({{ 'admin' if current_user.is_admin else 'membre' }}).
+    <a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
+</p>
+
+<h2>Changer d'identifiant</h2>
+<form class="contactForm" method="POST" action="{{ url_for('account.change_username') }}">
+    {{ username_form.hidden_tag() }}
+
+    {{ username_form.username.label }}
+    {{ username_form.username(autocomplete="username") }}
+    {% for e in username_form.username.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ username_form.submit_username(class="formSubmit") }}
+</form>
+
+<h2>Changer de mot de passe</h2>
+<form class="contactForm" method="POST" action="{{ url_for('account.change_password') }}">
+    {{ password_form.hidden_tag() }}
+
+    {{ password_form.current_password.label }}
+    {{ password_form.current_password(autocomplete="current-password") }}
+    {% for e in password_form.current_password.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ password_form.new_password.label }}
+    {{ password_form.new_password(autocomplete="new-password") }}
+    {% for e in password_form.new_password.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ password_form.confirm.label }}
+    {{ password_form.confirm(autocomplete="new-password") }}
+    {% for e in password_form.confirm.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ password_form.submit_password(class="formSubmit") }}
+</form>
+{% endblock %}

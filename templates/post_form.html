@@ -15,7 +15,7 @@
     <div class="postGallery galleryEdit">
         {% for image_id in post_images %}
         <div class="galleryItem">
-            <img src="{{ url_for('serve_image', image_id=image_id) }}" alt="">
+            <img src="{{ url_for('public.serve_image', image_id=image_id) }}" alt="">
             <label><input type="checkbox" name="remove_images" value="{{ image_id }}"> Supprimer</label>
         </div>
         {% endfor %}

@@ -68,10 +68,35 @@
     border-radius: 10px;
 }
 
+.pointsBox p {
+    margin: 0.2rem 0;
+}
+
 .pointsBox strong {
     margin-left: 0.5rem;
     color: var(--milk-accent-2);
     font-size: 2rem;
+}
+
+.pointsForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.pointsForm input {
+    width: 7rem;
+    padding: 0.25rem 0.4rem;
+    background: var(--milk-ink);
+    color: var(--milk-panel);
+    border: 2px solid var(--milk-line);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1.1rem;
 }
 
 /* ---- tableau des tâches ---- */

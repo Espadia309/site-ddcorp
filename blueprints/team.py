@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 
 from flask import (Blueprint, abort, flash, redirect, render_template,
@@ -5,11 +6,11 @@ from flask import (Blueprint, abort, flash, redirect, render_template,
 from flask_login import current_user, login_required
 
 from data import (TASK_STATUSES, add_message, create_task, delete_task,
-                  edit_task, get_task, list_messages, list_tasks, list_users,
-                  set_task_status)
+                  edit_task, get_points, get_task, list_messages, list_tasks,
+                  list_users, save_points, set_task_status)
 from filters import PARIS
 from forms import MessageForm, TaskForm
-from team_config import COMPETITIONS, POINTS_TOTAL
+from team_config import COMPETITIONS
 
 bp = Blueprint("team", __name__)
 
@@ -65,9 +66,20 @@ def dashboard():
         by_status["fait"] = by_status["fait"][:DONE_VISIBLE]
 
     return render_template("team.html", title="Espace équipe",
-                           countdown=countdown, later=upcoming[1:4], points=POINTS_TOTAL,
+                           countdown=countdown, later=upcoming[1:4], points=get_points() or {"points": 0},
                            by_status=by_status, counts=counts, hidden_done=hidden_done,
                            statuses=TASK_STATUSES, names=_names())
+
+@bp.route("/espace-equipe/points", methods=["POST"])
+@login_required
+def set_points():
+    raw = request.form.get("points", "").strip()
+    if not re.fullmatch(r"\d{1,6}", raw):
+        flash("Entre un nombre entier positif (6 chiffres maximum).", "error")
+    else:
+        save_points(int(raw), current_user)
+        flash("Total de points mis à jour.", "success")
+    return redirect(url_for("team.dashboard"))
 
 @bp.route("/espace-equipe/taches/nouvelle", methods=["GET", "POST"])
 @login_required

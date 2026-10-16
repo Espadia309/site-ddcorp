@@ -3,7 +3,7 @@
 {% block content %}
 {% if countdown %}
 <section class="countdown" id="countdown" data-target="{{ countdown.iso }}">
-    <img class="countdownImg" src="{{ url_for('static', filename='images/Logo_bioglow.png') }}" alt="" width="100" height="100">
+    <img class="countdownImg" src="{{ url_for('static', filename='images/countdown_left.png') }}" alt="" width="100" height="100">
     <div class="countdownBody">
     <p class="countdownName">{{ countdown.name }} · {{ countdown.date | paris('%d/%m/%Y à %Hh%M') }}</p>
     <p class="countdownTime">
@@ -18,15 +18,24 @@
     </p>
     {% endif %}
     </div>
-    <img class="countdownImg" src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}" alt="" width="100" height="100">
+    <img class="countdownImg" src="{{ url_for('static', filename='images/countdown_right.png') }}" alt="" width="100" height="100">
 </section>
 {% else %}
 <p class="postMeta">Aucune échéance à venir. Ajoute une date dans <code>team_config.py</code>.</p>
 {% endif %}
 
-{% if points is not none %}
-<p class="pointsBox">Points au total <strong>{{ points }}</strong></p>
-{% endif %}
+<section class="pointsBox">
+    <p>Points au total <strong>{{ points.points }}</strong></p>
+    {% if points.updated_at %}
+    <p class="taskMeta">Modifié par {{ names.get(points.updated_by, points.updated_by_name) }}, {{ points.updated_at | paris }}</p>
+    {% endif %}
+    <form class="pointsForm" method="POST" action="{{ url_for('team.set_points') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="points">Nouveau total :</label>
+        <input type="number" id="points" name="points" min="0" max="999999" step="1" value="{{ points.points }}" required>
+        <button type="submit" class="smallBtn">Mettre à jour</button>
+    </form>
+</section>
 
 <p class="centerLine"><a class="bigLink" href="{{ url_for('team.new_task') }}">+ Nouvelle tâche</a></p>
 

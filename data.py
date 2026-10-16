@@ -46,7 +46,6 @@ def get_post(post_id):
         return {"id": doc.id, **doc.to_dict()}
     return None
 
-# ---------- images ----------
 ALLOWED_FORMATS = ["jpg", "jpeg", "png", "gif", "webp"]
 MAX_IMAGES_PER_SUBMIT = 8
 MAX_IMAGE_BYTES = 900_000
@@ -167,7 +166,6 @@ def _event(user, kind, text=""):
     return {"author_id": user.id, "author_name": user.username, "kind": kind,
             "text": text, "created_at": firestore.SERVER_TIMESTAMP}
 
-
 def list_tasks():
     docs = db.collection("tasks").order_by("created_at", direction=firestore.Query.DESCENDING).stream()
     return [{"id": d.id, **d.to_dict()} for d in docs]
@@ -226,3 +224,17 @@ def delete_task(task_id):
     for message in ref.collection("messages").stream():
         ref.collection("messages").document(message.id).delete()
     ref.delete()
+
+def get_points():
+    doc = db.collection("team_settings").document("main").get()
+    if doc.exists:
+        return doc.to_dict()
+    return None
+
+def save_points(points, user):
+    db.collection("team_settings").document("main").set({
+        "points": points,
+        "updated_by": user.id,
+        "updated_by_name": user.username,
+        "updated_at": firestore.SERVER_TIMESTAMP,
+    }, merge=True)

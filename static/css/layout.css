@@ -147,6 +147,12 @@
     display: block;
 }
 
+/* menu du compte : aligné à droite pour ne pas déborder de l'écran */
+.site-nav .dropdown-user > .dropdown-content {
+    left: auto;
+    right: 0;
+}
+
 #theme-switch {
     flex-shrink: 0;
     width: 50px;
@@ -277,6 +283,12 @@ footer {
         white-space: normal;
     }
 
+    /* menu du compte : toujours déplié dans le menu mobile (pas de survol au doigt) */
+    .site-nav .dropdown-user > .dropdown-content,
+    .site-nav .dropdown-user:hover > .dropdown-content {
+        display: block;
+    }
+
     #theme-switch {
         align-self: flex-start;
         margin-top: 0.25rem;
@@ -305,4 +317,3 @@ footer {
         transition: none;
     }
 }
-

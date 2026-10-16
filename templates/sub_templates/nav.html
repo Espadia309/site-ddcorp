@@ -54,20 +54,23 @@
         </a>
 
         {% if current_user.is_authenticated %}
-            {% if current_user.is_admin %}
-            <a href="{{ url_for('admin.dashboard') }}"
-               {% if request.path.startswith('/admin') %}class="active"{% endif %}>
-                Admin
-            </a>
-            {% endif %}
-            <a href="{{ url_for('team.dashboard') }}"
-               {% if request.path.startswith('/espace-equipe') %}class="active"{% endif %}>
+        <div class="dropdown dropdown-user
+            {% if request.path.startswith(('/espace-equipe', '/compte', '/admin')) %}current-section{% endif %}">
+            <a class="dropdown-toggle"
+               href="{{ url_for('team.dashboard') }}"
+               {% if request.path.startswith('/espace-equipe') %}aria-current="page"{% endif %}>
                 Espace équipe
+                <span class="dropdown-arrow" aria-hidden="true">▾</span>
             </a>
-            <a href="{{ url_for('account.account') }}"
-               {% if request.path.startswith('/compte') %}class="active"{% endif %}>
-                Mon compte
-            </a>
+
+            <div class="dropdown-content">
+                <a href="{{ url_for('account.account') }}">Mon compte</a>
+                {% if current_user.is_admin %}
+                <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
+            </div>
+        </div>
         {% endif %}
 
         <a href="{{ url_for('public.formulaire') }}"

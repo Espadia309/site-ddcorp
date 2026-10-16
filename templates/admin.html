@@ -2,31 +2,57 @@
 
 {% block content %}
 
-<ul class="adminMenu">
-  <li><a href="{{ url_for('admin.new_post') }}">Nouveau post d'actualité</a></li>
-  <li><a href="{{ url_for('admin.users') }}">Gérer les comptes</a></li>
-  <li><a href="{{ url_for('admin.guide') }}">Tutoriel d'écriture (Louis en a besoin en gros)</a></li>
-  <li>
-    <form method="POST" action="{{ url_for('admin.reset') }}" class="inlineForm" onsubmit="return confirm('Remettre le compteur de vues à zéro ? C\'est irréversible.');">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button type="submit" class="linkBtn">Reset le conteur de vues (irréversible)</button>
-    </form>
-  </li>
-  <li><a href="{{ url_for('auth.logout') }}">Déconnexion</a></li>
-</ul>
+<div class="adminCards">
+  <a class="adminCard" href="{{ url_for('admin.new_post') }}">
+    <span class="cardTitle">Nouveau post</span>
+    <span class="cardText">Publier une actualité avec du texte et des images</span>
+  </a>
+
+  <a class="adminCard" href="{{ url_for('admin.users') }}">
+    <span class="cardTitle">Comptes</span>
+    <span class="cardText">Créer, réinitialiser ou supprimer des comptes</span>
+  </a>
+
+  <a class="adminCard" href="{{ url_for('team.dashboard') }}">
+    <span class="cardTitle">Espace équipe</span>
+    <span class="cardText">Tâches, points et compte à rebours</span>
+  </a>
+
+  <a class="adminCard" href="{{ url_for('admin.guide') }}">
+    <span class="cardTitle">Tutoriel d'écriture</span>
+    <span class="cardText">Louis en a besoin en gros</span>
+  </a>
+
+  <form method="POST" action="{{ url_for('admin.reset') }}" class="adminCardForm" onsubmit="return confirm('Remettre le compteur de vues à zéro ? C\'est irréversible.');">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="adminCard danger">
+      <span class="cardTitle">Reset des vues</span>
+      <span class="cardText">Compteur actuel : {{ views }} · irréversible</span>
+    </button>
+  </form>
+
+  <a class="adminCard" href="{{ url_for('auth.logout') }}">
+    <span class="cardTitle">Déconnexion</span>
+    <span class="cardText">Fermer la session sur cet appareil</span>
+  </a>
+</div>
 
 <h2>Posts publiés</h2>
 {% if posts %}
-<ul class="adminPosts">
+<ul class="adminList">
   {% for post in posts %}
   <li>
-    <strong>{{ post.title }}</strong>
-    <span class="postMeta">({{ post.created_at | paris('%d/%m/%Y') }})</span>
-    <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Modifier</a>
-    <form method="POST" action="{{ url_for('admin.delete_post', post_id=post.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce post ?');">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button type="submit" class="linkBtn">Supprimer</button>
-    </form>
+    <div class="adminListInfo">
+      <strong>{{ post.title }}</strong>
+      <span class="postMeta">{{ post.created_at | paris('%d/%m/%Y') }}</span>
+    </div>
+    <div class="adminActions">
+      <a href="{{ url_for('admin.edit_post', post_id=post.id) }}">Modifier</a>
+      <form method="POST" action="{{ url_for('admin.delete_post', post_id=post.id) }}" class="inlineForm" onsubmit="return confirm('Supprimer ce post ?');">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="linkBtn">Supprimer</button>
+      </form>
+    </div>
   </li>
   {% endfor %}
 </ul>

@@ -104,6 +104,120 @@
     line-height: 1;
 }
 
-.adminMenu .linkBtn {
+/* ---- cartes du dashboard (même esprit que la page d'accueil) ---- */
+.adminCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+    margin: 1rem 0 1.5rem;
+}
+
+.adminCardForm {
+    display: flex;
+    margin: 0;
+}
+
+.adminCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.4rem;
+    width: 100%;
+    min-height: 130px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: var(--milk-panel);
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-top: 6px solid var(--milk-accent-2);
+    border-radius: 16px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.adminCard:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.adminCard:focus-visible {
+    outline: 2px solid var(--milk-accent-2);
+    outline-offset: 3px;
+}
+
+.adminCard:hover .cardTitle {
+    color: var(--milk-accent-2-hover);
+}
+
+.adminCard.danger {
+    border: 2px dashed var(--milk-accent-2);
+}
+
+.cardTitle {
+    display: block;
+    color: var(--milk-heading);
+    font-size: 1.5rem;
+}
+
+.cardText {
+    display: block;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+/* ---- liste des posts ---- */
+.adminList {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+}
+
+.adminList li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    padding: 0.7rem 1rem;
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-radius: 12px;
+}
+
+.adminListInfo {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.adminListInfo strong {
+    overflow-wrap: anywhere;
+}
+
+.adminActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.adminActions .linkBtn {
     margin-left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .adminCard {
+        transition: none;
+    }
+
+    .adminCard:hover {
+        transform: none;
+    }
 }

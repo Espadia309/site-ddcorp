@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><a href="{{ url_for('team.dashboard') }}">← Retour à l'espace équipe</a></p>
+
+<p class="centerLine"><span class="statusBadge status-{{ task.status }}">{{ statuses.get(task.status, task.status) }}</span></p>
+
+{% if task.description %}
+<p class="taskText">{{ task.description }}</p>
+{% endif %}
+
+<p class="taskMeta">Créée par <strong>{{ names.get(task.created_by, task.created_by_name) }}</strong> le {{ task.created_at | paris }}</p>
+<p class="taskMeta">Dernière modification par <strong>{{ names.get(task.updated_by, task.updated_by_name) }}</strong> le {{ task.updated_at | paris }}</p>
+
+<div class="taskActions">
+  {% for other, other_label in statuses.items() if other != task.status %}
+  <form method="POST" action="{{ url_for('team.set_status', task_id=task.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="status" value="{{ other }}">
+    <input type="hidden" name="back" value="detail">
+    <button type="submit" class="smallBtn">→ {{ other_label }}</button>
+  </form>
+  {% endfor %}
+  <a class="smallBtn" href="{{ url_for('team.edit', task_id=task.id) }}">Modifier</a>
+  {% if can_delete %}
+  <form method="POST" action="{{ url_for('team.remove', task_id=task.id) }}" onsubmit="return confirm('Supprimer cette tâche et tous ses messages ?');">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="smallBtn">Supprimer</button>
+  </form>
+  {% endif %}
+</div>
+
+<h2 id="messages">Messages</h2>
+<div class="thread">
+  {% for m in messages %}
+    {% set author = names.get(m.author_id, m.author_name) %}
+    {% if m.kind == 'status' %}
+      <p class="threadEvent">{{ author }} a passé la tâche à « {{ statuses.get(m.text, m.text) }} » · {{ m.created_at | paris }}</p>
+    {% elif m.kind == 'edit' %}
+      <p class="threadEvent">{{ author }} a modifié la tâche · {{ m.created_at | paris }}</p>
+    {% else %}
+      <div class="threadMessage">
+        <div class="threadHead"><strong>{{ author }}</strong> · {{ m.created_at | paris }}</div>
+        <p class="taskText">{{ m.text }}</p>
+      </div>
+    {% endif %}
+  {% else %}
+    <p class="postMeta">Aucun message pour le moment.</p>
+  {% endfor %}
+</div>
+
+<form class="contactForm" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.text.label }}
+    {{ form.text(rows=4) }}
+    {% for e in form.text.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+    {{ form.submit(class="formSubmit") }}
+</form>
+{% endblock %}

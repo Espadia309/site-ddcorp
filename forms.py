@@ -1,3 +1,4 @@
+"""Formulaires WTForms."""
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, MultipleFileField
 from wtforms import (PasswordField, SelectField, StringField, SubmitField,
@@ -5,7 +6,6 @@ from wtforms import (PasswordField, SelectField, StringField, SubmitField,
 from wtforms.validators import DataRequired, EqualTo, Length, Regexp
 
 from data import ALLOWED_FORMATS
-
 
 def _strip(value):
     return value.strip() if isinstance(value, str) else value
@@ -18,19 +18,16 @@ def _username_field(label):
         Regexp(r"^[A-Za-z0-9_.-]+$", message="Lettres, chiffres, point, tiret et underscore uniquement."),
     ])
 
-
 # connexion (identifiant + mot de passe)
 class LoginForm(FlaskForm):
     username = StringField("Identifiant", filters=[_strip], validators=[DataRequired()])
     password = PasswordField("Mot de passe", validators=[DataRequired()])
     submit = SubmitField("Connexion")
 
-
 # page « Mon compte »
 class UsernameForm(FlaskForm):
     username = _username_field("Nouvel identifiant")
     submit_username = SubmitField("Changer l'identifiant")
-
 
 class PasswordForm(FlaskForm):
     current_password = PasswordField("Mot de passe actuel", validators=[DataRequired()])
@@ -44,13 +41,29 @@ class PasswordForm(FlaskForm):
     ])
     submit_password = SubmitField("Changer le mot de passe")
 
-
 # création d'un compte par l'admin
 class NewUserForm(FlaskForm):
     username = _username_field("Identifiant")
     role = SelectField("Rôle", choices=[("member", "Membre"), ("admin", "Admin")])
     submit = SubmitField("Créer le compte")
 
+# tâches de l'espace équipe
+class TaskForm(FlaskForm):
+    title = StringField("Titre", filters=[_strip], validators=[
+        DataRequired("Donne un titre à la tâche."),
+        Length(max=120, message="120 caractères maximum."),
+    ])
+    description = TextAreaField("Description (optionnelle)", filters=[_strip], validators=[
+        Length(max=2000, message="2000 caractères maximum."),
+    ])
+    submit = SubmitField("Créer la tâche")
+
+class MessageForm(FlaskForm):
+    text = TextAreaField("Ajouter un message", filters=[_strip], validators=[
+        DataRequired("Écris quelque chose avant d'envoyer."),
+        Length(max=1000, message="1000 caractères maximum."),
+    ])
+    submit = SubmitField("Envoyer")
 
 # création / modification d'un post
 class NewPost(FlaskForm):

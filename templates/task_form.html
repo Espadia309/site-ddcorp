@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p><a href="{{ back_url }}">← Annuler</a></p>
+
+<form class="contactForm" method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.title.label }}
+    {{ form.title() }}
+    {% for e in form.title.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ form.description.label }}
+    {{ form.description(rows=6) }}
+    {% for e in form.description.errors %}
+        <p class="flash flash-error">{{ e }}</p>
+    {% endfor %}
+
+    {{ form.submit(class="formSubmit") }}
+</form>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if countdown %}
+<section class="countdown" id="countdown" data-target="{{ countdown.iso }}">
+    <p class="countdownName">{{ countdown.name }} · {{ countdown.date | paris('%d/%m/%Y à %Hh%M') }}</p>
+    <p class="countdownTime">
+        <span class="countdownUnit"><strong data-unit="d">{{ countdown.days }}</strong><span>jours</span></span>
+        <span class="countdownUnit"><strong data-unit="h">{{ '%02d' % countdown.hours }}</strong><span>heures</span></span>
+        <span class="countdownUnit"><strong data-unit="m">{{ '%02d' % countdown.minutes }}</strong><span>minutes</span></span>
+        <span class="countdownUnit"><strong data-unit="s">{{ '%02d' % countdown.seconds }}</strong><span>secondes</span></span>
+    </p>
+    {% if later %}
+    <p class="postMeta">Ensuite :
+        {% for name, when in later %}{{ name }} ({{ when | paris('%d/%m/%Y') }}){% if not loop.last %}, {% endif %}{% endfor %}
+    </p>
+    {% endif %}
+</section>
+{% else %}
+<p class="postMeta">Aucune échéance à venir. Ajoute une date dans <code>team_config.py</code>.</p>
+{% endif %}
+
+<p class="centerLine"><a class="bigLink" href="{{ url_for('team.new_task') }}">+ Nouvelle tâche</a></p>
+
+<div class="board">
+  {% for status, label in statuses.items() %}
+  <section class="column">
+    <h2>{{ label }} <span class="count">{{ counts[status] }}</span></h2>
+
+    {% for t in by_status[status] %}
+    <article class="taskCard status-{{ status }}">
+      <h3><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></h3>
+      <p class="taskMeta">Créée par {{ names.get(t.created_by, t.created_by_name) }}, {{ t.created_at | paris('%d/%m') }}</p>
+      <p class="taskMeta">Modifiée par {{ names.get(t.updated_by, t.updated_by_name) }}, {{ t.updated_at | paris('%d/%m à %Hh%M') }}</p>
+      <p class="taskMeta">{{ t.message_count or 0 }} message{{ 's' if (t.message_count or 0) != 1 }}</p>
+      <div class="taskActions">
+        {% for other, other_label in statuses.items() if other != status %}
+        <form method="POST" action="{{ url_for('team.set_status', task_id=t.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="status" value="{{ other }}">
+          <button type="submit" class="smallBtn">→ {{ other_label }}</button>
+        </form>
+        {% endfor %}
+      </div>
+    </article>
+    {% else %}
+    <p class="postMeta">Rien ici.</p>
+    {% endfor %}
+
+    {% if status == 'fait' and hidden_done %}
+    <p><a href="{{ url_for('team.dashboard', all=1) }}">Afficher les {{ hidden_done }} autres tâches terminées</a></p>
+    {% endif %}
+  </section>
+  {% endfor %}
+</div>
+
+{% if countdown %}
+<script>
+(function () {
+    var box = document.getElementById("countdown");
+    var target = new Date(box.dataset.target).getTime();
+    var units = {
+        d: box.querySelector('[data-unit="d"]'),
+        h: box.querySelector('[data-unit="h"]'),
+        m: box.querySelector('[data-unit="m"]'),
+        s: box.querySelector('[data-unit="s"]')
+    };
+    function pad(n) { return n < 10 ? "0" + n : String(n); }
+    var timer;
+    function tick() {
+        var left = Math.floor((target - Date.now()) / 1000);
+        if (left <= 0) {
+            clearInterval(timer);
+            box.querySelector(".countdownTime").textContent = "C'est le moment, bonne chance !";
+            return;
+        }
+        units.d.textContent = Math.floor(left / 86400);
+        units.h.textContent = pad(Math.floor(left % 86400 / 3600));
+        units.m.textContent = pad(Math.floor(left % 3600 / 60));
+        units.s.textContent = pad(left % 60);
+    }
+    tick();
+    timer = setInterval(tick, 1000);
+})();
+</script>
+{% endif %}
+{% endblock %}

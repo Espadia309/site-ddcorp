@@ -60,6 +60,10 @@
                 Admin
             </a>
             {% endif %}
+            <a href="{{ url_for('team.dashboard') }}"
+               {% if request.path.startswith('/espace-equipe') %}class="active"{% endif %}>
+                Espace équipe
+            </a>
             <a href="{{ url_for('account.account') }}"
                {% if request.path.startswith('/compte') %}class="active"{% endif %}>
                 Mon compte

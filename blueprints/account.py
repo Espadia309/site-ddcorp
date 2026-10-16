@@ -8,7 +8,6 @@ from forms import PasswordForm, UsernameForm
 
 bp = Blueprint("account", __name__)
 
-
 def _render(username_form=None, password_form=None):
     if username_form is None:
         username_form = UsernameForm()
@@ -18,12 +17,10 @@ def _render(username_form=None, password_form=None):
     return render_template("account.html", title="Mon compte",
                            username_form=username_form, password_form=password_form)
 
-
 @bp.route("/compte")
 @login_required
 def account():
     return _render()
-
 
 @bp.route("/compte/identifiant", methods=["POST"])
 @login_required
@@ -38,7 +35,6 @@ def change_username():
             flash("Identifiant mis à jour.", "success")
             return redirect(url_for("account.account"))
     return _render(username_form=form)
-
 
 @bp.route("/compte/mot-de-passe", methods=["POST"])
 @login_required
@@ -55,6 +51,7 @@ def change_password():
             update_user(user_id,
                         password_hash=generate_password_hash(form.new_password.data),
                         must_change_password=False)
+            # le hash a changé : on rouvre la session de cet appareil (les autres sont déconnectés)
             login_user(AuthUser(get_user(user_id)))
             flash("Mot de passe mis à jour.", "success")
             return redirect(url_for("account.account"))

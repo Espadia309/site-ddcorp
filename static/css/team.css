@@ -1,0 +1,192 @@
+.countdown {
+    margin: 0.5rem 0 1.25rem;
+    padding: 1rem;
+    text-align: center;
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-radius: 10px;
+}
+
+.countdownName {
+    margin: 0;
+    color: var(--milk-heading);
+    font-size: 1.35rem;
+}
+
+.countdownTime {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0.5rem 0;
+}
+
+.countdownUnit {
+    min-width: 4.5rem;
+}
+
+.countdownUnit strong {
+    display: block;
+    color: var(--milk-accent-2);
+    font-size: 2.6rem;
+    line-height: 1.1;
+}
+
+.countdownUnit span {
+    font-size: 1rem;
+    opacity: 0.7;
+}
+
+/* ---- tableau des tâches ---- */
+.centerLine {
+    text-align: center;
+}
+
+.bigLink {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    background: var(--milk-accent-2);
+    color: var(--milk-ink);
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.bigLink:hover {
+    background: var(--milk-accent-2-hover);
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.column h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.4rem;
+}
+
+.count {
+    display: inline-block;
+    min-width: 1.6rem;
+    padding: 0 0.4rem;
+    background: var(--milk-line);
+    color: var(--milk-panel);
+    border-radius: 999px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.taskCard {
+    margin-bottom: 0.7rem;
+    padding: 0.7rem 0.8rem;
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+.taskCard h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1.2rem;
+    overflow-wrap: anywhere;
+}
+
+.taskCard.status-en_cours {
+    border-left: 6px solid var(--milk-accent-2);
+}
+
+.taskCard.status-fait {
+    border-left: 6px solid var(--milk-accent);
+}
+
+.taskMeta {
+    margin: 0 0 0.15rem;
+    opacity: 0.75;
+    font-size: 1rem;
+}
+
+.taskActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.5rem 0;
+}
+
+.taskActions form {
+    margin: 0;
+}
+
+.smallBtn {
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    background: transparent;
+    color: var(--milk-accent-2);
+    border: 1px solid var(--milk-accent-2);
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.smallBtn:hover {
+    background: var(--milk-accent-2);
+    color: var(--milk-ink);
+}
+
+/* ---- page d'une tâche ---- */
+.statusBadge {
+    display: inline-block;
+    padding: 0.1rem 0.8rem;
+    border: 2px solid var(--milk-line);
+    border-radius: 999px;
+    font-size: 1.1rem;
+}
+
+.statusBadge.status-en_cours {
+    border-color: var(--milk-accent-2);
+    color: var(--milk-accent-2);
+}
+
+.statusBadge.status-fait {
+    border-color: var(--milk-accent);
+}
+
+/* contenu écrit par les membres : texte brut, retours à la ligne conservés */
+.taskText {
+    margin: 0.3rem 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.thread {
+    margin: 0.75rem 0 1rem;
+}
+
+.threadEvent {
+    margin: 0.4rem 0;
+    opacity: 0.7;
+    font-size: 1.05rem;
+    text-align: center;
+}
+
+.threadMessage {
+    margin: 0.6rem 0;
+    padding: 0.6rem 0.8rem;
+    background: var(--milk-bg-2);
+    border: 2px solid var(--milk-line);
+    border-radius: 10px;
+}
+
+.threadHead {
+    opacity: 0.75;
+    font-size: 1rem;
+}
+
+@media (max-width: 800px) {
+    .board {
+        grid-template-columns: 1fr;
+    }
+}

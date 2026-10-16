@@ -16,6 +16,8 @@ from forms import LoginForm
 
 bp = Blueprint("auth", __name__)
 
+# Vérifié aussi quand l'identifiant n'existe pas : le temps de réponse ne révèle
+# pas quels identifiants sont valides.
 DUMMY_HASH = generate_password_hash("mot-de-passe-factice")
 
 class AuthUser(UserMixin):
@@ -31,9 +33,9 @@ class AuthUser(UserMixin):
         return self.role == "admin"
 
     def get_id(self):
+        # id + empreinte du hash : changer de mot de passe invalide les autres sessions
         fingerprint = hashlib.sha256(self.password_hash.encode()).hexdigest()[:16]
         return f"{self.id}.{fingerprint}"
-
 
 @login_manager.user_loader
 def load_user(session_id):
@@ -44,7 +46,6 @@ def load_user(session_id):
     user = AuthUser(doc)
     return user if user.get_id() == session_id else None
 
-
 def admin_required(view):
     """Connecté ET admin. @login_required seul laisserait entrer les membres."""
     @wraps(view)
@@ -54,14 +55,12 @@ def admin_required(view):
         return view(*args, **kwargs)
     return login_required(wrapper)
 
-
 def _safe_next(target):
     """N'accepte que des chemins relatifs du site (évite les redirections vers l'extérieur)."""
     if not target or not target.startswith("/") or target.startswith("//") or "\\" in target:
         return None
     parsed = urlparse(target)
     return None if parsed.scheme or parsed.netloc else target
-
 
 def _authenticate(username, password):
     doc = get_user_by_username(username)
@@ -81,11 +80,10 @@ def _authenticate(username, password):
             return AuthUser(get_user(new_id))
     return None
 
-
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("account.account"))
+        return redirect(url_for("team.dashboard"))
     form = LoginForm()
     error = None
     if form.validate_on_submit():
@@ -95,8 +93,7 @@ def login():
         user = _authenticate(username, password)
         if user is not None:
             login_user(user)
-            default = url_for("admin.dashboard") if user.is_admin else url_for("account.account")
-            return redirect(_safe_next(request.args.get("next")) or default)
+            return redirect(_safe_next(request.args.get("next")) or url_for("team.dashboard"))
         error = "Identifiant ou mot de passe incorrect."
     return render_template("login.html", title="Connexion", form=form, error=error)
 
@@ -106,6 +103,9 @@ def logout():
     logout_user()
     return redirect(url_for("auth.login"))
 
+# Pages accessibles même quand le compte doit d'abord changer son mot de passe.
+# On les teste AVANT de toucher à current_user : les fichiers statiques et les images
+# ne déclenchent ainsi aucune lecture Firestore.
 _EXEMPT = {None, "static", "public.serve_image", "account.account",
            "account.change_password", "auth.logout"}
 

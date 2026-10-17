@@ -2,13 +2,13 @@
 
 {% block content %}
 <form id="contactForm" class="contactForm">
-    <label for="objet">Objet</label>
+    <label for="objet">{{ _("Objet") }}</label>
     <input type="text" id="objet" name="objet" required>
 
-    <label for="message">Message</label>
+    <label for="message">{{ _("Message") }}</label>
     <textarea id="message" name="message" rows="6" required></textarea>
 
-    <button type="submit">Envoyer</button>
+    <button type="submit">{{ _("Envoyer") }}</button>
 </form>
 
 <script>
@@ -19,7 +19,7 @@ document.getElementById("contactForm").addEventListener("submit", function (even
     const message = document.getElementById("message").value.trim();
 
     if (!objet || !message) {
-        alert("Merci de remplir tous les champs.");
+        alert({{ _("Merci de remplir tous les champs.") | tojson }});
         return;
     }
 
@@ -28,7 +28,7 @@ document.getElementById("contactForm").addEventListener("submit", function (even
 
     window.location.href = `mailto:ddcorp@assofl.fr?subject=${subject}&body=${body}`;
 
-    alert("Merci pour votre message !");
+    alert({{ _("Merci pour votre message !") | tojson }});
     this.reset();
 });
 </script>

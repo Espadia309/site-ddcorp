@@ -3,14 +3,20 @@
 {% block content %}
 {% if posts %}
   {% for post in posts %}
+    {# version anglaise affichée seulement si le titre ET le contenu existent en anglais #}
+    {% set english = lang == 'en' and post.title_en and post.content_en %}
+    {% set post_title = post.title_en if english else post.title %}
     <article class="postCard">
-      <h2>{{ post.title }}</h2>
+      <h2>{{ post_title }}</h2>
       <p class="postMeta">{{ post.created_at | paris }}</p>
-      <div class="postContent">{{ post.content | markdown | safe }}</div>
+      {% if lang == 'en' and not english %}
+      <p class="postMeta">{{ _("Cette actualité n'est disponible qu'en français.") }}</p>
+      {% endif %}
+      <div class="postContent">{{ (post.content_en if english else post.content) | markdown | safe }}</div>
       {% if post.images %}
       <div class="postGallery{% if post.images | length == 1 %} single{% endif %}">
         {% for image_id in post.images %}
-          <a href="{{ url_for('public.serve_image', image_id=image_id) }}" target="_blank" rel="noopener"><img src="{{ url_for('public.serve_image', image_id=image_id) }}" alt="Image de l'actu « {{ post.title }} »" loading="lazy"></a>
+          <a href="{{ url_for('public.serve_image', image_id=image_id) }}" target="_blank" rel="noopener"><img src="{{ url_for('public.serve_image', image_id=image_id) }}" alt="{{ _("Image de l'actu « {title} »", title=post_title) }}" loading="lazy"></a>
         {% endfor %}
       </div>
       {% endif %}
@@ -18,6 +24,6 @@
     {% if not loop.last %}<hr class="postDivider">{% endif %}
   {% endfor %}
 {% else %}
-  <p>Aucune actualité pour le moment, revenez bientôt !</p>
+  <p>{{ _("Aucune actualité pour le moment, revenez bientôt !") }}</p>
 {% endif %}
 {% endblock %}

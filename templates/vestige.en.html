@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    <strong>A smart box to analyze sediments.</strong><br>
+    Our project is part of the FIRST LEGO LEAGUE competition. This year, the challenge given to the teams was to imagine a solution that could help archaeologists in their work.
+</p>
+<h2>Where the project came from</h2>
+<p>
+    So we did not come to archaeology by chance: it was the theme of the competition that led us to take an interest in this field. To better understand real needs on the ground, we decided to talk directly with professionals.
+</p>
+<p>
+    We were able to talk with archaeologists such as Fawzi Doumaz and Daniel Istria. Through several exchanges and video calls with them, we discovered how essential sediments are as a source of information for understanding an archaeological site.
+</p>
+<p>
+    However, analyzing these sediments often takes time, experience and sometimes sending samples to a laboratory. So we looked for an idea that could make this important step of the archaeologists' work easier and faster.
+</p>
+<h2>Our Solution: An Automated Analysis Box</h2>
+<p>
+    We came up with the idea of a box that can automatically analyze a sediment sample.
+</p>
+<p>
+    The principle is simple: the archaeologist places a sediment sample in the box, and it then goes through several analysis stages, a bit like a scientific examination chain.
+</p>
+<p>
+    Inside the box, a small conveyor belt moves the sediment past different sensors. At each stage, a new sensor analyzes one characteristic of the sediment.
+</p>
+<p>
+    This way, several pieces of important information can be collected automatically in just a few minutes.
+</p>
+<p>
+    This solution would work like a portable mini laboratory, right in the field.
+</p>
+<h2>The Different Analysis Stages</h2>
+<p>
+    When the sediment is placed in the box, it moves along the conveyor belt and passes through several analysis stations.
+</p>
+<ul>
+    <li><strong>Compactness analysis: </strong>One of the first analyses concerns the compactness of the sediment, that is, the resistance of the soil. To measure it, we use a penetrometer. This tool presses on the sediment to measure the force needed to sink into it. This data tells us whether the soil is very compact or rather loose. This information can help archaeologists understand the structure of the different soil layers.</li>
+    <li><strong>Color analysis: </strong>Another stage consists of analyzing the color of the sediment with a colorimetry sensor. The color of a soil can give archaeologists many clues: it can reveal the presence of organic matter, former deposits or changes in the soil over time.</li>
+    <li><strong>pH analysis: </strong>The sediment then passes by a sensor that measures its pH. The pH indicates whether the soil is acidic, neutral or basic. This information is important because it can influence how well archaeological objects are preserved in the ground. In our system, the pH could be measured at several moments of the process to get a more reliable measurement.</li>
+    <li><strong>Recording the position: </strong>All the information collected can be linked to a GPS position. This makes it possible to know exactly where on the archaeological site the sediment was taken from. Archaeologists can then link this data to a map of the site to better understand how the area is organized.</li>
+</ul>
+<h2>Why Could This System Be Useful?</h2>
+<p>
+    Our analysis box would quickly provide several pieces of scientific information about a sediment, directly in the field.<br>
+    It could bring several advantages:
+</p>
+<ul>
+    <li>analyze a sediment in a few minutes</li>
+    <li>get several measurements automatically</li>
+    <li>make the archaeologists' work easier</li>
+    <li>better understand the different soil layers</li>
+    <li>reduce the waiting time for some analyses</li>
+</ul>
+<h2>Model and program</h2>
+<p>For this project we built a model of our analysis box, as you can see below: </p>
+<img src="{{ url_for('static', filename='images/Maquette_Vestige.png') }}" alt="Photo of the model" class="coupesImg">
+<p>This model was paired with a program that let us analyze the color of sediments using a camera: </p>
+<img src="{{ url_for('static', filename='images/Prog_Vestige.png') }}" alt="Screenshot of the program" class="coupesAutreImg">
+<p><strong>
+    In short, our goal is to create a tool that would make sediment analysis faster, simpler and more efficient.
+</strong></p>
+{% endblock %}

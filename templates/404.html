@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>{{ message or "Cette page n'existe pas !" }}</p>
-<p>Retournez à l'<a href="{{ url_for('public.home') }}">accueil</a> pour ne pas rester perdu.</p>
+<p>{{ message or _("Cette page n'existe pas !") }}</p>
+{% set home_link %}<a href="{{ url_for('public.home') }}">{{ _("accueil") }}</a>{% endset %}
+<p>{{ _("Retournez à l'{link} pour ne pas rester perdu.", link=home_link) }}</p>
 {% endblock %}

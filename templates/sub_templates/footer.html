@@ -1,11 +1,13 @@
 <footer>
     <div>
-        Une (formidable) création de la <a href="https://www.instagram.com/dd_corp_lego_team/">DDCorp</a> du lycée <a href="https://lycee-gustave-eiffel.fr/">Gustave Eiffel</a>
+        {% set team_link %}<a href="https://www.instagram.com/dd_corp_lego_team/">DDCorp</a>{% endset %}
+        {% set school_link %}<a href="https://lycee-gustave-eiffel.fr/">Gustave Eiffel</a>{% endset %}
+        {{ _("Une (formidable) création de la {team} du lycée {school}", team=team_link, school=school_link) }}
     <a href="{{ url_for('team.dashboard') }}">
           <img src="{{ url_for('static', filename='images/Logo-Lycee-Gustave-Eiffel.jpg') }}" width="30" height="30" alt="Gustave Eiffel High School Logo" />
         </a>
     </div>
     <div>
-        nombre de vues : {{ views }}
+        {{ _("nombre de vues : {views}", views=views) }}
     </div>
 </footer>

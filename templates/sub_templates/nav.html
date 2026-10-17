@@ -3,13 +3,15 @@
        {% if request.path == url_for('public.home') %}aria-current="page"{% endif %}>
         <img src="{{ url_for('static', filename='images/Logo_Ddcorp_2.png') }}"
              width="50" height="50" alt="DDCORP"/>
-        <span><em>Accueil</em></span>
+        <span><em>{{ _("Accueil") }}</em></span>
     </a>
 
     <button class="menu-toggle"
             id="menu-toggle"
             type="button"
-            aria-label="Ouvrir le menu"
+            aria-label="{{ _('Ouvrir le menu') }}"
+            data-label-open="{{ _('Ouvrir le menu') }}"
+            data-label-close="{{ _('Fermer le menu') }}"
             aria-controls="nav-links"
             aria-expanded="false">
         <span></span>
@@ -20,12 +22,12 @@
     <div class="nav-links" id="nav-links">
         <a href="{{ url_for('public.actus') }}"
            {% if request.path == url_for('public.actus') %}class="active"{% endif %}>
-            Actualités
+            {{ _("Actualités") }}
         </a>
 
         <a href="{{ url_for('public.equipe') }}"
            {% if request.path == url_for('public.equipe') %}class="active"{% endif %}>
-            Équipe
+            {{ _("Équipe") }}
         </a>
 
         <a href="{{ url_for('public.robot') }}"
@@ -38,7 +40,7 @@
             <a class="dropdown-toggle"
                href="{{ url_for('public.projet') }}"
                {% if request.path.startswith('/projet') %}aria-current="page"{% endif %}>
-                Projets
+                {{ _("Projets") }}
                 <span class="dropdown-arrow" aria-hidden="true">▾</span>
             </a>
 
@@ -50,38 +52,45 @@
 
         <a href="{{ url_for('public.recompenses') }}"
            {% if request.path == url_for('public.recompenses') %}class="active"{% endif %}>
-            Récompenses
+            {{ _("Récompenses") }}
         </a>
 
         {% if current_user.is_authenticated %}
         <div class="dropdown dropdown-user
             {% if request.path.startswith(('/espace-equipe', '/compte', '/admin')) %}current-section{% endif %}">
             <button class="dropdown-toggle" type="button" aria-haspopup="true">
-                Mon espace
+                {{ _("Mon espace") }}
                 <span class="dropdown-arrow" aria-hidden="true">▾</span>
             </button>
 
             <div class="dropdown-content">
                 <a href="{{ url_for('team.dashboard') }}"
-                   {% if request.path.startswith('/espace-equipe') %}aria-current="page"{% endif %}>Espace équipe</a>
-                <a href="{{ url_for('account.account') }}">Mon compte</a>
+                   {% if request.path.startswith('/espace-equipe') %}aria-current="page"{% endif %}>{{ _("Espace équipe") }}</a>
+                <a href="{{ url_for('account.account') }}">{{ _("Mon compte") }}</a>
                 {% if current_user.is_admin %}
-                <a href="{{ url_for('admin.dashboard') }}">Admin</a>
+                <a href="{{ url_for('admin.dashboard') }}">{{ _("Admin") }}</a>
                 {% endif %}
-                <a href="{{ url_for('auth.logout') }}">Se déconnecter</a>
+                <a href="{{ url_for('auth.logout') }}">{{ _("Se déconnecter") }}</a>
             </div>
         </div>
         {% endif %}
 
         <a href="{{ url_for('public.formulaire') }}"
            {% if request.path == url_for('public.formulaire') %}class="active"{% endif %}>
-            Contact
+            {{ _("Contact") }}
         </a>
+
+        <div class="lang-switch" role="group" aria-label="{{ _('Langue') }}">
+            <a href="{{ request.path }}?lang=fr" hreflang="fr" lang="fr"
+               {% if lang == 'fr' %}aria-current="true"{% endif %}>FR</a>
+            <a href="{{ request.path }}?lang=en" hreflang="en" lang="en"
+               {% if lang == 'en' %}aria-current="true"{% endif %}>EN</a>
+        </div>
 
         <button id="theme-switch"
                 class="theme-switch"
                 type="button"
-                aria-label="Changer de thème">
+                aria-label="{{ _('Changer de thème') }}">
             <svg xmlns="http://www.w3.org/2000/svg"
                  width="24" height="24" viewBox="0 -960 960 960"
                  fill="currentColor" aria-hidden="true">

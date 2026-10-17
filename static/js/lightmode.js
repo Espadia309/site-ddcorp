@@ -18,7 +18,6 @@ const disableLightmode = () => {
   saveTheme(null)
 }
 
-// filet de sécurité : head.html applique déjà le thème avant l'affichage, mais pas de mal à vérifier
 try {
   if (localStorage.getItem('lightmode') === 'active') root.classList.add('lightmode')
 } catch (e) {}
@@ -39,7 +38,7 @@ if (menuToggle && navLinks) {
     menuToggle.setAttribute('aria-expanded', isOpen);
     menuToggle.setAttribute(
       'aria-label',
-      isOpen ? 'Fermer le menu' : 'Ouvrir le menu'
+      isOpen ? menuToggle.dataset.labelClose : menuToggle.dataset.labelOpen
     );
   });
 
@@ -47,7 +46,7 @@ if (menuToggle && navLinks) {
     link.addEventListener('click', () => {
       navLinks.classList.remove('open');
       menuToggle.setAttribute('aria-expanded', 'false');
-      menuToggle.setAttribute('aria-label', 'Ouvrir le menu');
+      menuToggle.setAttribute('aria-label', menuToggle.dataset.labelOpen);
     });
   });
 }

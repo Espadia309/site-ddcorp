@@ -15,15 +15,18 @@ from forms import NewPost, NewUserForm
 
 bp = Blueprint("admin", __name__)
 
+
 @bp.route("/admin")
 @admin_required
 def dashboard():
     return render_template("admin.html", title="Dashboard Admin", posts=get_posts())
 
+
 @bp.route("/admin/post/guide")
 @admin_required
 def guide():
     return render_template("markdown.html", title="Guide")
+
 
 @bp.route("/admin/post/new", methods=["GET", "POST"])
 @admin_required
@@ -37,6 +40,8 @@ def new_post():
                 db.collection("posts").add({
                     "title": form.title.data.strip(),
                     "content": form.content.data.strip(),
+                    "title_en": form.title_en.data or "",
+                    "content_en": (form.content_en.data or "").strip(),
                     "images": image_ids,
                     "created_at": firestore.SERVER_TIMESTAMP,
                     "updated_at": firestore.SERVER_TIMESTAMP,
@@ -48,6 +53,7 @@ def new_post():
             else:
                 return redirect(url_for("admin.dashboard"))
     return render_template("post_form.html", title="Nouvelle Actu", form=form, error=error, post_images=[])
+
 
 @bp.route("/admin/post/<post_id>/edit", methods=["GET", "POST"])
 @admin_required
@@ -69,6 +75,8 @@ def edit_post(post_id):
             db.collection("posts").document(post_id).update({
                 "title": form.title.data.strip(),
                 "content": form.content.data.strip(),
+                "title_en": form.title_en.data or "",
+                "content_en": (form.content_en.data or "").strip(),
                 "images": keep + new_ids,
                 "updated_at": firestore.SERVER_TIMESTAMP,
             })
@@ -77,7 +85,10 @@ def edit_post(post_id):
     if request.method == "GET":
         form.title.data = post["title"]
         form.content.data = post["content"]
+        form.title_en.data = post.get("title_en", "")
+        form.content_en.data = post.get("content_en", "")
     return render_template("post_form.html", title="Modifier l'actu", form=form, error=error, post_images=existing)
+
 
 @bp.route("/admin/post/<post_id>/delete", methods=["POST"])
 @admin_required
@@ -88,11 +99,15 @@ def delete_post(post_id):
         delete_images(post.get("images", []))
     return redirect(url_for("admin.dashboard"))
 
+
 @bp.route("/admin/reset_views", methods=["POST"])
 @admin_required
 def reset():
     reset_views()
     return redirect(url_for("admin.dashboard"))
+
+
+# ---------- gestion des comptes ----------
 
 @bp.route("/admin/users", methods=["GET", "POST"])
 @admin_required
@@ -111,6 +126,7 @@ def users():
             return redirect(url_for("admin.users"))
     return render_template("admin_users.html", title="Comptes", form=form, users=list_users())
 
+
 @bp.route("/admin/users/<user_id>/reset-password", methods=["POST"])
 @admin_required
 def reset_user_password(user_id):
@@ -125,6 +141,7 @@ def reset_user_password(user_id):
     flash(f"Nouveau mot de passe temporaire pour « {target['username']} » : {temp_password} "
           "(note-le maintenant, il ne sera plus affiché).", "success")
     return redirect(url_for("admin.users"))
+
 
 @bp.route("/admin/users/<user_id>/delete", methods=["POST"])
 @admin_required

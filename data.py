@@ -96,6 +96,7 @@ def store_images(files):
         return [], "Impossible d'enregistrer les images (jpg, png, gif ou webp valides uniquement)."
     return saved, None
 
+
 @lru_cache(maxsize=64)
 def load_image(image_id):
     """Images never change once saved, so keeping the most recent ones in
@@ -106,10 +107,16 @@ def load_image(image_id):
     d = doc.to_dict()
     return d["data"], d.get("content_type", "image/webp")
 
+
+# ---------- utilisateurs ----------
+# Chaque compte : username, username_lower (pour l'unicité sans tenir compte de la casse),
+# password_hash, role ("admin" ou "member"), must_change_password, created_at.
+
 def _where(query, field, op, value):
     if FieldFilter is not None:
         return query.where(filter=FieldFilter(field, op, value))
     return query.where(field, op, value)
+
 
 def get_user(user_id):
     if not user_id:
@@ -119,22 +126,29 @@ def get_user(user_id):
         return {"id": doc.id, **doc.to_dict()}
     return None
 
+
 def get_user_by_username(username):
     query = _where(db.collection("users"), "username_lower", "==", username.strip().lower()).limit(1)
     for doc in query.stream():
         return {"id": doc.id, **doc.to_dict()}
     return None
 
+
 def username_taken(username, exclude_id=None):
     found = get_user_by_username(username)
     return found is not None and found["id"] != exclude_id
 
+
 def users_exist():
     return any(True for _ in db.collection("users").limit(1).stream())
 
+
 def list_users():
-    docs = db.collection("users").order_by("username_lower").stream()
-    return [{"id": d.id, **d.to_dict()} for d in docs]
+    # Pas d'order_by côté Firestore : il ignore en silence les documents qui n'ont pas
+    # le champ trié (ex. compte créé à la main dans la console). On trie ici.
+    users = [{"id": d.id, **d.to_dict()} for d in db.collection("users").stream()]
+    return sorted(users, key=lambda u: (u.get("username_lower") or u.get("username") or "").lower())
+
 
 def create_user(username, password_hash, role="member", must_change_password=False):
     username = username.strip()
@@ -148,27 +162,43 @@ def create_user(username, password_hash, role="member", must_change_password=Fal
     })
     return ref.id
 
+
 def update_user(user_id, **fields):
     db.collection("users").document(user_id).update(fields)
+
 
 def delete_user(user_id):
     db.collection("users").document(user_id).delete()
 
+
+# ---------- tâches de l'espace équipe ----------
+# tasks/{id} : title, description, status, created_by (+ _name), created_at,
+#              updated_by (+ _name), updated_at, message_count
+# tasks/{id}/messages/{id} : kind ("message" | "status" | "edit"), text,
+#              author_id, author_name, created_at
+# Les noms sont copiés dans les documents (« snapshot ») au cas où un compte serait supprimé ;
+# tant que le compte existe, l'affichage utilise son nom actuel.
+
 TASK_STATUSES = {"a_faire": "À faire", "en_cours": "En cours", "fait": "Fait"}
+
 
 def _task_ref(task_id):
     return db.collection("tasks").document(task_id)
 
+
 def _who(user, prefix):
     return {f"{prefix}_by": user.id, f"{prefix}_by_name": user.username}
+
 
 def _event(user, kind, text=""):
     return {"author_id": user.id, "author_name": user.username, "kind": kind,
             "text": text, "created_at": firestore.SERVER_TIMESTAMP}
 
+
 def list_tasks():
     docs = db.collection("tasks").order_by("created_at", direction=firestore.Query.DESCENDING).stream()
     return [{"id": d.id, **d.to_dict()} for d in docs]
+
 
 def get_task(task_id):
     if not task_id:
@@ -177,6 +207,7 @@ def get_task(task_id):
     if doc.exists:
         return {"id": doc.id, **doc.to_dict()}
     return None
+
 
 def create_task(title, description, user):
     _, ref = db.collection("tasks").add({
@@ -191,6 +222,7 @@ def create_task(title, description, user):
     })
     return ref.id
 
+
 def set_task_status(task_id, user, status):
     ref = _task_ref(task_id)
     batch = db.batch()  # les deux écritures réussissent ensemble ou pas du tout
@@ -198,6 +230,7 @@ def set_task_status(task_id, user, status):
                        "updated_at": firestore.SERVER_TIMESTAMP})
     batch.set(ref.collection("messages").document(), _event(user, "status", status))
     batch.commit()
+
 
 def edit_task(task_id, user, title, description):
     ref = _task_ref(task_id)
@@ -207,6 +240,7 @@ def edit_task(task_id, user, title, description):
     batch.set(ref.collection("messages").document(), _event(user, "edit"))
     batch.commit()
 
+
 def add_message(task_id, user, text):
     # un message n'est pas une « modification » de la tâche : updated_by ne change pas
     ref = _task_ref(task_id)
@@ -215,9 +249,11 @@ def add_message(task_id, user, text):
     batch.set(ref.collection("messages").document(), _event(user, "message", text))
     batch.commit()
 
+
 def list_messages(task_id):
     docs = _task_ref(task_id).collection("messages").order_by("created_at").stream()
     return [{"id": d.id, **d.to_dict()} for d in docs]
+
 
 def delete_task(task_id):
     ref = _task_ref(task_id)
@@ -225,11 +261,16 @@ def delete_task(task_id):
         ref.collection("messages").document(message.id).delete()
     ref.delete()
 
+
+# ---------- total de points de l'équipe ----------
+# team_settings/main : points, updated_by (+ _name), updated_at
+
 def get_points():
     doc = db.collection("team_settings").document("main").get()
     if doc.exists:
         return doc.to_dict()
     return None
+
 
 def save_points(points, user):
     db.collection("team_settings").document("main").set({

@@ -57,6 +57,14 @@
     transition: color 0.3s ease, background-color 0.3s ease;
 }
 
+/* le titre d'un menu déroulant peut être un <button> : on enlève son style par défaut */
+.site-nav button.dropdown-toggle {
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+}
+
 .site-nav .nav-logo:hover {
     background-color: var(--milk-accent-2);
 }
@@ -183,11 +191,11 @@
     display: none;
 }
 
-body.lightmode #theme-switch svg:first-child {
+.lightmode #theme-switch svg:first-child {
     display: none;
 }
 
-body.lightmode #theme-switch svg:last-child {
+.lightmode #theme-switch svg:last-child {
     display: block;
 }
 

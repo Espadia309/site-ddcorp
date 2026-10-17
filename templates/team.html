@@ -48,7 +48,9 @@
     <article class="taskCard status-{{ status }}">
       <h3><a href="{{ url_for('team.task_detail', task_id=t.id) }}">{{ t.title }}</a></h3>
       <p class="taskMeta">Créée par {{ names.get(t.created_by, t.created_by_name) }}, {{ t.created_at | paris('%d/%m') }}</p>
-      <p class="taskMeta">Modifiée par {{ names.get(t.updated_by, t.updated_by_name) }}, {{ t.updated_at | paris('%d/%m à %Hh%M') }}</p>
+      {% if t.description %}
+        <p class="taskMeta">{{ t.description[:20] ~ ('…' if t.description|length > 20 else '') }}</p>
+      {% endif %}
       <p class="taskMeta">{{ t.message_count or 0 }} message{{ 's' if (t.message_count or 0) != 1 }}</p>
       <div class="taskActions">
         {% for other, other_label in statuses.items() if other != status %}

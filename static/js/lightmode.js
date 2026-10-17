@@ -1,22 +1,33 @@
-let lightmode = localStorage.getItem('lightmode')
+const root = document.documentElement
 const themeSwitch = document.getElementById('theme-switch')
 
+const saveTheme = (value) => {
+  try {
+    if (value) localStorage.setItem('lightmode', value)
+    else localStorage.removeItem('lightmode')
+  } catch (e) {}
+}
+
 const enableLightmode = () => {
-  document.body.classList.add('lightmode')
-  localStorage.setItem('lightmode', 'active')
+  root.classList.add('lightmode')
+  saveTheme('active')
 }
 
 const disableLightmode = () => {
-  document.body.classList.remove('lightmode')
-  localStorage.setItem('lightmode', null)
+  root.classList.remove('lightmode')
+  saveTheme(null)
 }
 
-if(lightmode === "active") enableLightmode()
+// filet de sécurité : head.html applique déjà le thème avant l'affichage, mais pas de mal à vérifier
+try {
+  if (localStorage.getItem('lightmode') === 'active') root.classList.add('lightmode')
+} catch (e) {}
 
-themeSwitch.addEventListener("click", () => {
-  lightmode = localStorage.getItem('lightmode')
-  lightmode !== "active" ? enableLightmode() : disableLightmode()
-})
+if (themeSwitch) {
+  themeSwitch.addEventListener("click", () => {
+    root.classList.contains('lightmode') ? disableLightmode() : enableLightmode()
+  })
+}
 
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
